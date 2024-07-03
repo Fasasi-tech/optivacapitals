@@ -27,14 +27,14 @@ const Leave = () => {
         return <p>Something went wrong!</p>
     }
 
-    console.log(responsibility_center.value)
-    console.log(leave_period.value)
-    console.log(leave_type.value)
-    console.log(employee_list)
+    // console.log(responsibility_center.value)
+    // console.log(leave_period.value)
+    // console.log(leave_type.value)
+    // console.log(employee_list)
 
     const {value} = employee_list
 
-    console.log(value)
+    // console.log(value)
 
     const handleResponsibilityCenterClick= ()=>{
         responsibility_center
@@ -127,7 +127,7 @@ const Leave = () => {
         toast.success('Leave form submitted successfully');
         resetForm()
     }catch (err){
-        console.log(err?.data?.error?.message)
+        // console.log(err?.data?.error?.message)
         if(err && err?.data?.error?.message){
             toast.error(err?.data?.error?.message)
         } else {

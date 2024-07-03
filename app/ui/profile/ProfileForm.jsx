@@ -24,7 +24,7 @@ const ProfileForm = ({changeState}) => {
                 toast.success('Profile updated successfully')
                 resetForm()
             } catch (err) {
-                console.log('Error:', err); // Log the entire error object
+                // console.log('Error:', err); // Log the entire error object
                 const errorMessage = err?.data?.error?.message || 'An unknown error occurred';
                 toast.error(`Error: ${errorMessage}`);
                 setSubmitting(false);
