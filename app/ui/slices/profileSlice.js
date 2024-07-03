@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
     prepareHeaders: async (headers, {getState}) =>{
         const state = getState()
         const accessTokens = state.auth.graphAccessToken;
-        console.log('yeah:',accessTokens)
+        // console.log('yeah:',accessTokens)
         if(accessTokens) {
             headers.set('Authorization', `Bearer ${accessTokens}`)
         }

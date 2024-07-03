@@ -21,7 +21,7 @@ export const signIn = (instance) => async (dispatch) => {
       scopes: ['User.read']
     });
 
-    console.log('Login response:', loginResponse);
+    // console.log('Login response:', loginResponse);
 
     const tokenRequest = {
       scopes: [ 'https://api.businesscentral.dynamics.com/.default'],
@@ -32,14 +32,14 @@ export const signIn = (instance) => async (dispatch) => {
     try {
       tokenResponse = await instance.acquireTokenSilent(tokenRequest);
     } catch (silentError) {
-      console.error('Silent token acquisition failed:', silentError);
+      // console.error('Silent token acquisition failed:', silentError);
       // Fallback to acquire token interactively if silent acquisition fails
       if (silentError instanceof msal.InteractionRequiredAuthError) {
         try {
           tokenResponse = await instance.acquireTokenPopup(tokenRequest);
-          console.log('Interactive token response:', tokenResponse);
+          // console.log('Interactive token response:', tokenResponse);
         } catch (popupError) {
-          console.error('Interactive token acquisition failed:', popupError);
+          // console.error('Interactive token acquisition failed:', popupError);
           throw popupError;
         }
       } else {
@@ -53,13 +53,13 @@ export const signIn = (instance) => async (dispatch) => {
 
     const user = loginResponse.account;
     const accessToken = tokenResponse.accessToken;
-    console.log(accessToken)
+    // console.log(accessToken)
 
     // Acquire a separate token for Microsoft Graph Api 
 
     const graphAccessToken = await acquireGraphToken(instance, loginResponse.account);
-    console.log("graph",graphAccessToken)
-    console.log('Microsoft Graph Access Token:', graphAccessToken)
+    // console.log("graph",graphAccessToken)
+    // console.log('Microsoft Graph Access Token:', graphAccessToken)
 
      // Fetch the user profile using the Graph API access token
     //  dispatch(fetchUserProfile(graphAccessToken));
@@ -73,7 +73,7 @@ export const signIn = (instance) => async (dispatch) => {
     dispatch(setAuthState({...authState }));
     
   } catch (error) {
-    console.error('Login failed:', error);
+    // console.error('Login failed:', error);
   }
 };
 
@@ -82,6 +82,6 @@ export const signOut = (instance) => async (dispatch) => {
     await instance.logoutPopup();
     dispatch(logout());
   } catch (error) {
-    console.error('Logout failed:', error);
+    //console.error('Logout failed:', error);
   }
 };
