@@ -11,9 +11,12 @@ import { MdOutlineTitle } from "react-icons/md";
 import { useGetProfilesQuery, useProfileMutation } from '../slices/profileApiSlice'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation'
 
 const ProfileForm = ({changeState}) => {
-    //const {data, isLoading, error} = useGetProfilesQuery()
+
+    const router = useRouter();
+
     const [Profile, {status, error, isLoading}] = useProfileMutation()
        
         const handleSubmit = async (values, {setSubmitting, resetForm}) =>{
@@ -22,9 +25,10 @@ const ProfileForm = ({changeState}) => {
                 await Profile(filteredValues).unwrap()
                 setSubmitting(true)
                 toast.success('Profile updated successfully')
+                router.push('/Profile')
                 resetForm()
             } catch (err) {
-                // console.log('Error:', err); // Log the entire error object
+               
                 const errorMessage = err?.data?.error?.message || 'An unknown error occurred';
                 toast.error(`Error: ${errorMessage}`);
                 setSubmitting(false);
@@ -45,11 +49,6 @@ const ProfileForm = ({changeState}) => {
 
                     const errors={}
 
-                    // if(values.phone > 11 || values.phone< 11){
-                    //     errors.phone='Invalid phone'
-
-                    // }
-                    // return errors;
                 }}
 
                 onSubmit={handleSubmit}
