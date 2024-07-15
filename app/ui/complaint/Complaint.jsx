@@ -4,15 +4,17 @@ import React from 'react'
 import { Formik } from 'formik'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useComplaintMutation, useGetEmployeesQuery } from '../slices/usersApiSlice'
+import { useComplaintMutation, useGetEmployeesQuery, useGetLeaveQuery } from '../slices/usersApiSlice'
 import Loader from '@/app/utils/Loader'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useGetProfilesQuery } from '../slices/profileApiSlice'
 
 
 const Complaint = () => {
     const {data:employee_list, isLoading:employee_list_loading, error:employee_list_error} = useGetEmployeesQuery()
     const [Complaint, {status, error, isLoading}] = useComplaintMutation()
+    const {data:LeaveData, isLoadingLeave, errorLeave} =useGetProfilesQuery()
 
     if (employee_list_loading){
         return <Loader />
@@ -24,7 +26,13 @@ const Complaint = () => {
 
    
     const {value}= employee_list
+  
+    const findCompanyEmail=LeaveData.userPrincipalName
  
+    const getEmpNo=value.find((val) => val.Company_E_Mail === findCompanyEmail)
+
+   const ResultEmpNo = getEmpNo?.No;
+   console.log('ResultEmpNo', ResultEmpNo)
 
     const getEmployeeDepartmentCode =(emp)=>{
         const findEmployee= value.find((e)=> e.No ===emp)
@@ -81,15 +89,13 @@ const Complaint = () => {
 
     }
 
-    
-
 
      const handleSubmit = async (values, {setSubmitting, resetForm}) =>{
         try{
             await Complaint(values).unwrap()
             setSubmitting(true)
             // alert('complaint form submitted succesfully')
-            toast.success('Complaint form submitted successfully');
+            toast.success('Complaint form submitted successfully!');
             resetForm()
         }catch (err){
            
@@ -103,7 +109,7 @@ const Complaint = () => {
   return (
     <div className='w-full bg-white dark:bg-slate-800 shadow-lg rounded-lg md:w-full mx-auto'>
         <Formik initialValues={{
-            Employee_No:"",
+            Employee_No:`${ResultEmpNo}`,
             Nature_of_Complaint:"",
             Date_of_incident:"",
             Details_of_Incident:"",
@@ -146,7 +152,7 @@ const Complaint = () => {
                 handleSubmit,
                 isSubmitting
             }) =>(
-                <div className='lg:w-[100%] w-full h-full md:mt-24 py-4 md:py-12 px-4  md:px-12   my-auto'>
+                <div className='lg:w-[100%] w-full h-full md:mt-8 py-4 md:py-12 px-4  md:px-12   my-auto'>
                     <form onSubmit={handleSubmit}>
                         <div className='flex justify-start text-2xl font-medium mb-8'>
                             <h1 className='font-libre-baskerville font-bold text-lg md:text-4xl text-[#722f37]'>Complaint Form</h1>
@@ -161,6 +167,7 @@ const Complaint = () => {
                                     value={values.Employee_No}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
+                                    readOnly
                                     placeholder='Employee No'
                                     className='p-2 w-full dark:bg-slate-800 outline-none border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
                                 />

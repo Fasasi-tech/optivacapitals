@@ -54,9 +54,9 @@ const Sidebar = () => {
   
   return (
     <>
-       { isAuthenticated && (<div className='flex h-screen relative'>
+       { isAuthenticated && (<div className='flex h-screen relative dark:bg-slate-800'>
             <div className={`bg-white dark:bg-slate-800 p-5 pt-8${open ? 'w-72' : 'w-0'} duration-300 overflow-auto relative ${!open && 'hidden'}`}>
-                < IoCloseSharp className={`text-[#722f37] text-4xl absolute -right-0 top-9 pr-4  cursor-pointer`}  onClick={() =>setOpen(!open)}/>
+                < IoCloseSharp className={`text-[#722f37] text-4xl absolute -right-0 top-9 pr-4 md:hidden visible  cursor-pointer`}  onClick={() =>setOpen(!open)}/>
                 <div className= 'w-32'>
                     <Image
                         src={logo}

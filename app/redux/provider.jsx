@@ -24,7 +24,7 @@ export default function StoreProvider({ children }) {
       const decodedToken = jwtDecode(accessToken)
       const currentTime = Math.floor(Date.now() / 1000)
       const timeUntilExpiry = decodedToken.exp - currentTime - REFRESH_THRESHOLD
-      // console.log('Time until token expiry:', timeUntilExpiry)
+      console.log('Time until token expiry:', timeUntilExpiry)
       return timeUntilExpiry
     } catch (error) {
       // console.error('Invalid token:', error)
@@ -46,6 +46,9 @@ useEffect(() => {
       accessToken: storedAccessToken,
       graphAccessToken
     }));
+  } else {
+    router.push('/'); // Redirect to login page if not authenticated
+    return;
   }
 
   const refreshTokenCheck = () => {

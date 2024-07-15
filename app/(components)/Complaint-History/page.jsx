@@ -1,10 +1,10 @@
-import LeaveHistory from '@/app/ui/LeaveHistory/LeaveHistory'
+import ComplaintHistory from '@/app/ui/ComplaintHistory/ComplaintHistory'
 import React from 'react'
 
 const page = () => {
   return (
     <div className=' px-4 mt-4 lg:px-8'>
-        <LeaveHistory />
+        <ComplaintHistory />
     </div>
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 import React, {useState} from 'react'
-import { useGetLeaveQuery } from '../slices/usersApiSlice'
+import { useComplaintListPageQuery } from '../slices/usersApiSlice'
+import { useGetProfilesQuery } from '../slices/profileApiSlice'
 import Loader from '@/app/utils/Loader'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import {
@@ -12,46 +13,37 @@ import {
     PaginationNext,
     PaginationPrevious,
   } from "@/components/ui/pagination"
-import { useGetProfilesQuery } from '../slices/profileApiSlice'
 
-const LeaveHistory = () => {
-    const {data:LeaveData, isLoading, error} =useGetLeaveQuery()
-    const {data, isLoading:HistoryLoading, error:errorLoading} = useGetProfilesQuery()
+const ComplaintHistory = () => {
+    const {data, isLoading, error} = useComplaintListPageQuery()
+    const {data:profileData, isLoading:HistoryLoading, error:errorLoading} = useGetProfilesQuery()
 
-   
     const [currentPage, setCurrentPage] = useState(1)
+
     if (isLoading || HistoryLoading){
         return <Loader />
     }
 
     if (error || errorLoading){
-        return  <p>Something went wrong!</p>
+        return <p>Something went wrong!</p>
     }
 
-     const {value}= LeaveData;
-     const help=data
+    const {value} = data;
+    const findCompanyEmail = profileData.userPrincipalName;
 
-     
+    console.log(value, 'valueResult')
 
-     const findCompanyEmail=help.userPrincipalName
-     
+    const result = value.filter((i) => i.Company_Email === findCompanyEmail)
+    console.log('res', result)
 
-     const sortedDateArray = [...value].sort((a,b) => {
-        const dateA = new Date(a.Start_Date);
-        const dateB= new Date(b.Start_Date)
-        return dateB - dateA
-     })
-  
-   const result=sortedDateArray.filter((i)=> i.Company_Email === findCompanyEmail)
-    
-   
+    const result2 = result.filter((r) => r.Status ==='Closed')
+
 
     const paginate = (array, pageSize, pageNumber) => {
         return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
       };
 
-   
-    const itemsPerPage =5
+      const itemsPerPage =5
 
     const totalPages= Math.ceil(result.length / itemsPerPage)
 
@@ -64,43 +56,46 @@ const LeaveHistory = () => {
 
     }
 
-    const paginatedData = paginate(result, itemsPerPage, currentPage)
+    const paginatedData = paginate(result2, itemsPerPage, currentPage)
+
   return (
     <>
      <div className='flex justify-start text-2xl font-medium mb-8'>
-            <h1 className='font-libre-baskerville font-bold text-lg md:text-4xl text-[#722f37]'>Leave History</h1>
+            <h1 className='font-libre-baskerville font-bold text-lg md:text-4xl text-[#722f37]'>Complaint History</h1>
         </div>
     <div className='bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg overflow overflow-auto'>
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className='py-8'> Application Code </TableHead>
+                        <TableHead className='py-8'> Complaint No.</TableHead>
                         <TableHead className='py-8'> Company Email </TableHead>
-                        <TableHead className='py-8'> Days Applied </TableHead>
+                        <TableHead className='py-8'> Date of Incident </TableHead>
+                        <TableHead className='py-8'> Department Code </TableHead>
+                        <TableHead className='py-8'> Details of Incident </TableHead>
+                        <TableHead className='py-8'> Employee Name </TableHead>
                         <TableHead className='py-8'> Employee No </TableHead>
-                        <TableHead className='py-8'> End Date </TableHead>
-                        <TableHead className='py-8'> Leave Type </TableHead>
-                        <TableHead className='py-8'> Names </TableHead>
-                        <TableHead className='py-8'> Reliever Name </TableHead>
-                        <TableHead className='py-8'> Return Date </TableHead>
-                        <TableHead className='py-8'> Start Date </TableHead>
+                        <TableHead className='py-8'> Job Description </TableHead>
+                        <TableHead className='py-8'> Job Title </TableHead>
+                        <TableHead className='py-8'> Nature of Complaint </TableHead>
+                        <TableHead className='py-8'> Supervisor </TableHead>
                         <TableHead className='py-8'> Status </TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody >
                 {paginatedData.map((i, index) =>(
                     <TableRow key={index}>
-                        <TableCell>{i.Application_Code}</TableCell>
+                        <TableCell>{i.Complaint_No}</TableCell>
                         <TableCell>{i.Company_Email}</TableCell>
-                        <TableCell>{i.Days_Applied}</TableCell>
+                        <TableCell>{i.Date_of_incident}</TableCell>
+                        <TableCell>{i.Department_Code}</TableCell>
+                        <TableCell>{i.Details_of_Incident}</TableCell>
+                        <TableCell>{i.Employee_Name}</TableCell>
                         <TableCell>{i.Employee_No}</TableCell>
-                        <TableCell>{i.End_Date}</TableCell>
-                        <TableCell>{i.Leave_Type}</TableCell>
-                        <TableCell>{i.Names}</TableCell>
-                        <TableCell>{i.Reliever_Name}</TableCell>
-                        <TableCell>{i.Return_Date}</TableCell>
-                        <TableCell>{i.Start_Date}</TableCell>
-                        <TableCell ><p className={`p-1 w-20 text-center rounded-lg  font-semibold ${i.Status === 'Pending Approval' ? 'bg-blue-200 text-blue-600' : i.Status === 'New' ? 'bg-yellow-100 text-yellow-600' : i.Status === 'Approved' ? 'bg-green-200 text-green-400' : i.Status === 'Rejected' ? 'bg-red-200 text-red-600' :'bg-teal-200 text-teal-600'}`  }>{i.Status}</p></TableCell>
+                        <TableCell>{i.Job_Description}</TableCell>
+                        <TableCell>{i.Job_Title}</TableCell>
+                        <TableCell>{i.Nature_of_Complaint}</TableCell>
+                        <TableCell>{i.Supervisor}</TableCell>
+                        <TableCell ><p className={`p-1 w-20 text-center rounded-md text-white font-semibold ${i.Status === 'Closed' ? 'bg-green-200 text-green-500':  ''}`}>{i.Status}</p></TableCell>
                     </TableRow>
                     ))}
                 </TableBody>
@@ -130,9 +125,8 @@ const LeaveHistory = () => {
           
             </div>
             
-        </div>
-   </> 
+        </div></>
   )
 }
 
-export default LeaveHistory
+export default ComplaintHistory

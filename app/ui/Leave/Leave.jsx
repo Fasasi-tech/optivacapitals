@@ -13,17 +13,17 @@ const Leave = () => {
     const {data:leave_period, isLoading:leave_period_loading, error:leave_error}= useGetLeavePeriodQuery()
     const {data:leave_type, isLoading:leave_type_loading, error:leave_type_error}=useGetLeaveTypesQuery()
     const {data:employee_list, isLoading:employee_list_loading, error:employee_list_error} = useGetEmployeesQuery()
-    // const {data:getProfile, isLoading:user_loading, error:user_error} = useGetProfilesQuery()
-    const [Leave, {status, error:submitError, isLoading:Loading}] = useLeaveMutation()
+   const {data:getReliever, isLoading:loadingReliever, error:loadingError} = useGetProfilesQuery()
 
-    if(isLoading || leave_period_loading || leave_type_loading || employee_list_loading ){
+    const [Leave, {status, error:submitError, isLoading:Loading}] = useLeaveMutation()
+    if(isLoading || leave_period_loading || leave_type_loading || employee_list_loading  ){
         return <Loader />
     }
 
         
+    
 
-
-    if (error || leave_error || leave_type_error || employee_list_error){
+    if (error || leave_error || leave_type_error || employee_list_error ){
         return <p>Something went wrong!</p>
     }
 
@@ -33,12 +33,26 @@ const Leave = () => {
     // console.log(employee_list)
 
     const {value} = employee_list
+    console.log('val', value)
 
+    const generateReliever= getReliever?.userPrincipalName
+    // const {userPrincipalName} = generateReliever
+    console.log('bc',generateReliever)
+
+    const response=value.find ((val) =>  generateReliever === val.Company_E_Mail)
+
+    const add = response.No
+    console.log('add', add)
+   
+    // console.log('reliever:', getReliever)
+
+    const getRelieverResponsibilityCenter=value.find((i) => generateReliever ===i.Company_E_Mail )
+    const r_center = getRelieverResponsibilityCenter?.Department_Code
+    
+    // console.log('r_center', r_center)
     // console.log(value)
 
-    const handleResponsibilityCenterClick= ()=>{
-        responsibility_center
-    }
+    
 
     const handleLeavePeriodClick = () =>{
         leave_period
@@ -86,12 +100,28 @@ const Leave = () => {
          } 
      }
 
+     const getDepartment =(email)=>{
+        
+        const getCompanyEmail = value.find((i) => email === i.Company_E_Mail)
+
+        if (getCompanyEmail){
+            const {Department_Code} = getCompanyEmail
+
+            return `${Department_Code}`
+                } else if (!getCompanyEmail){
+        return 'Employee not found!'
+     }
+
+    }
+
+    
+
      const calculateMinDate = () =>{
         const currentDate = new Date()
         currentDate.setDate(currentDate.getDate() +3);
         return currentDate.toISOString().split('T')[0]
      }
-    
+     
      
      // Check if a date is a weekday
   const isWeekday = (date) => date.getDay() !== 0 && date.getDay() !== 6;
@@ -143,7 +173,7 @@ const Leave = () => {
         
         <Formik initialValues={{
             // Responsibility_Center:"",
-            Company_Email:"",
+            Company_Email:`${generateReliever}`,
             Leave_Period:"",
             Leave_Type:'',
             Days_Applied:"",
@@ -219,7 +249,7 @@ const Leave = () => {
               }, [values.Start_Date, values.Days_Applied]);
                 
               return (
-            <div className='lg:w-[100%] w-full h-full md:mt-24 py-4 md:py-12 px-4  md:px-12   my-auto'>
+            <div className='lg:w-[100%] w-full h-full md:mt-8 py-4 md:py-12 px-4  md:px-12   my-auto'>
                 <form onSubmit={handleSubmit}>
                     <div className='flex justify-start text-2xl font-medium mb-8'>
                         <h1 className='font-libre-baskerville font-bold text-lg md:text-4xl text-[#722f37]'>Leave Application Registration</h1>
@@ -227,24 +257,23 @@ const Leave = () => {
                     <div className='grid lg:grid-cols-2 place-items-center  gap-x-8'>
                         <div className='h-12 mb-12 w-full'>
                             <label htmlFor="Responsibility Center" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Responsibility Center</label>
-                            <select       
+                            <Input      
                                 type='text'
                                 name="Responsibility_Center"
                                 id='Responsibility_Center'
-                                value={values.Responsibility_Center}
+                                value={values.Company_Email && getDepartment(values.Company_Email)}
                                 onChange={handleChange}
-                                onClick={handleResponsibilityCenterClick}
                                 onBlur={handleBlur}
                                 placeholder='Responsibility Center'
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid  border-slate-300 text-gray-500 h-12 bg-transparent  '
-                            >
-                                 <option>{isLoading && 'Loading'}</option>
+                             />
+                                 {/* <option>{isLoading && 'Loading'}</option>
                                      {responsibility_center.value.map((center) =>(
                                     <option key={center.Id} value={center.Id} >
                                         {center.Code}
                                     </option>
                                 ))}
-                            </select>
+                            </select> */}
                             {touched.Responsibility_Center && errors.Responsibility_Center ? <div className='text-red-500 pl-2 font-semibold'>{errors.Responsibility_Center}</div>: null}
                         </div>
 
@@ -255,6 +284,7 @@ const Leave = () => {
                                 name="Company_Email"
                                 id='Company_Email'
                                 value={values.Company_Email}
+                                readOnly
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 placeholder='Company Email'
@@ -264,7 +294,7 @@ const Leave = () => {
                         </div>
 
                         <div className='h-12 mb-12 w-full'>
-                            <label htmlFor="Company Email" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Applicant Name</label>
+                            <label htmlFor="Applicant Name" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Applicant Name</label>
                             <Input
                                 type=''
                                 name=""
@@ -424,7 +454,7 @@ const Leave = () => {
                                 className='p-2 w-full outline-none border border-solid dark:bg-slate-800 border-slate-300 text-gray-500 h-12 bg-transparent'
                             >
                                 <option>{isLoading && 'Loading'}</option>
-                                    {value.filter( (i) => values.Responsibility_Center === i.Department_Code).map((center) =>(
+                                    {value.filter( (i) => r_center === i.Department_Code).map((center) =>(
                                     <option key={center.No} value={center.No} >
                                          {center.No} {' '} {center.First_Name} {' '}  {center.Last_Name} {' '}  ({center.Department_Code})
                                     </option>

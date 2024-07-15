@@ -11,23 +11,32 @@ export const Menus=[
     },
     {
         "id":2,
-        "title":"Complaint form",
-        "icon": <MdOutlineQueryBuilder />,
-        "path":"/Complaint"
-
-    },
-    {
-        "id":3,
         "title":"Leave History",
         "icon": <MdOutlinePending />,
         "path":"/History"
 
     },
     {
+        "id":3,
+        "title":"Complaint form",
+        "icon": <MdOutlineQueryBuilder />,
+        "path":"/Complaint"
+
+    },
+    
+    {
         "id":4,
+        "title":"Complaint History",
+        "icon": <CgProfile />,
+        "path":"/Complaint-History"
+
+    },
+    
+    {
+        "id":5,
         "title":"Profile",
         "icon": <CgProfile />,
         "path":"/Profile"
 
-    }
+    },
 ]

@@ -6,6 +6,7 @@ import Sidebar from './ui/Sidebar/Sidebar';
 import StoreProvider from './redux/provider';
 import Navbar from './ui/Navbar/Navbar';
 import { ThemeProvider } from './utils/ThemeProvider';
+import LayoutContent from './utils/LayoutContent';
 
 
 export const metadata = {
@@ -25,8 +26,8 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
         <ContextProvider>
-            <div className='w-full '>
-              <div className='fixed  z-20 top-0 left-0'>
+            <div className='flex'>
+              {/* <div className='fixed  z-20 top-0 left-0'>
                 <Sidebar/>
               </div>
               <div className='px-4 '>
@@ -34,7 +35,10 @@ export default function RootLayout({ children }) {
                   <Navbar/>
                 </div>
                 {children}
-              </div>
+              </div> */}
+                <LayoutContent>
+                  {children}
+                </LayoutContent>
             </div>
           </ContextProvider>
         </ThemeProvider>

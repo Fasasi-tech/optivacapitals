@@ -5,6 +5,7 @@ import {fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 const ENDPOINT="https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')"
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/HRLeaveApplicationCard
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/HRLeaveApplicationsList
+//https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/ComplaintFormListPage
 
 
 export const employeeApiSlice = apiSlice.injectEndpoints({
@@ -42,6 +43,14 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
                 method:'POST',
                 body:data
             })
+        }),
+        employeeCard:builder.query({
+            query:(employeeId) =>`${ENDPOINT}/HREmployeeCard('${employeeId}')`,
+            providesTags:['EmployeeCard']
+        }),
+        complaintListPage:builder.query({
+            query:() => `${ENDPOINT}/ComplaintFormListPage`,
+            providesTags:['complaintListPage']
         })
 
        
@@ -49,4 +58,4 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
     overrideExisting: true,
 })
 
-export const { useComplaintMutation, useLeaveMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery} = employeeApiSlice
+export const { useComplaintMutation, useComplaintListPageQuery, useLeaveMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useEmployeeCardQuery} = employeeApiSlice

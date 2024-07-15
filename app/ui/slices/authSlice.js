@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 const initialState = {
   isAuthenticated: false,
-  user: typeof window !== 'undefined' && localStorage.getItem('users') || null,
+  user: typeof window !== 'undefined' && localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
   accessToken: typeof window !== 'undefined' && localStorage.getItem('accessTokens') || null,
   graphAccessToken:typeof window !== 'undefined' && localStorage.getItem('graphAccessTokens') || null,
 };
