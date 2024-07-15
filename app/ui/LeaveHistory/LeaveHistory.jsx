@@ -68,9 +68,9 @@ const LeaveHistory = () => {
   return (
     <>
      <div className='flex justify-start text-2xl font-medium mb-8'>
-            <h1 className='font-libre-baskerville font-bold text-lg md:text-4xl text-[#722f37]'>Leave History</h1>
+            <h1  className='font-libre-baskerville font-bold text-lg xl:text-4xl text-[#722f37]'>Leave History</h1>
         </div>
-    <div className='bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg overflow overflow-auto'>
+    <div className='bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg overflow-x-scroll'>
             <Table>
                 <TableHeader>
                     <TableRow>
