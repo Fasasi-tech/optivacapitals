@@ -22,8 +22,14 @@
 
  body {
   background:  rgb(241 245 249);
+  overflow-x:hidden;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 /*@layer utilities {
   .text-balance {
     text-wrap: balance;
