@@ -169,7 +169,7 @@ const Leave = () => {
     
 
   return (
-    <div className='w-full bg-white dark:bg-slate-800 shadow-lg rounded-lg md:w-full mx-auto'>
+    <div className='w-full bg-white dark:bg-slate-800 shadow-lg rounded-lg  md:w-full mx-auto'>
         
         <Formik initialValues={{
             // Responsibility_Center:"",
@@ -251,8 +251,8 @@ const Leave = () => {
               return (
             <div className='lg:w-[100%] w-full h-full md:mt-8 py-4 md:py-12 px-4  md:px-12   my-auto'>
                 <form onSubmit={handleSubmit}>
-                    <div className='flex justify-start text-2xl font-medium mb-8'>
-                        <h1 className='font-libre-baskerville font-bold text-lg md:text-4xl text-[#722f37]'>Leave Application Registration</h1>
+                    <div className='flex justify-start text-sm lg:text-lg xl:text-2xl font-medium mb-8'>
+                        <h1 className='font-libre-baskerville font-bold text-lg xl:text-4xl text-[#722f37]'>Leave Application Registration</h1>
                     </div>
                     <div className='grid lg:grid-cols-2 place-items-center  gap-x-8'>
                         <div className='h-12 mb-12 w-full'>

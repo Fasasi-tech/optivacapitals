@@ -3,7 +3,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className=' px-4 mt-4 lg:px-4 xl:px-8 '>
+    <div className=' my-4 px-4 xl:px-8 '>
       <Complaint />
     </div>
   )

@@ -60,10 +60,10 @@ const ComplaintHistory = () => {
 
   return (
     <>
-     <div className='flex justify-start text-lg xl:text-2xl font-medium mb-8'>
+     <div className='flex justify-start text-sm lg:text-lg xl:text-2xl font-medium mb-8'>
             <h1 className='font-libre-baskerville font-bold text-lg xl:text-4xl text-[#722f37]'>Complaint History</h1>
         </div>
-    <div className='bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg overflow-x-scroll'>
+    <div className='bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg overflow-auto'>
             <Table>
                 <TableHeader>
                     <TableRow>
