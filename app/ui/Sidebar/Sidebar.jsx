@@ -56,7 +56,7 @@ const Sidebar = () => {
     <>
        { isAuthenticated && (<div className='flex h-screen relative dark:bg-slate-800'>
             <div className={`bg-white dark:bg-slate-800 p-5 pt-8 ${open ? 'w-60' : 'w-0'} duration-300 overflow-auto relative ${!open && 'hidden'}`}>
-                < IoCloseSharp className={`text-[#722f37]  text-2xl xl:text-4xl absolute -right-0 top-9 pr-4 md:hidden visible  cursor-pointer`}  onClick={() =>setOpen(!open)}/>
+                < IoCloseSharp className={`text-[#722f37]  text-lg absolute -right-0 top-9 pr-4 md:hidden visible  cursor-pointer`}  onClick={() =>setOpen(!open)}/>
                 <div className= 'w-32'>
                     <Image
                         src={logo}
@@ -69,7 +69,7 @@ const Sidebar = () => {
                         return (
                             <div key={menu.id || index} className='mt-4' title={menu.title}>
                                 <Link href={menu.path} className={`flex items-center justify-start gap-4 py-4 px-2 font-bold ${isActive(menu.path)? 'bg-[#722f37] py-4  rounded-lg text-white': ''}  cursor-pointer rounded-lg `}>
-                                    <span className="text-2xl">
+                                    <span className="">
                                         {menu.icon}
                                     </span>
                                     <span >
@@ -80,7 +80,7 @@ const Sidebar = () => {
                         )
                     })}
                     <div  className="flex items-center justify-start gap-4 py-4 px-2 font-bold bg-gray-200 dark:bg-slate-800 rounded-lg mt-8 cursor-pointer"  onClick={handleSignOut}>
-                        <span className="text-2xl">
+                        <span className="">
                             <CiLogout />
                         </span>
                         <span className={`${!open && "hidden"} `}>

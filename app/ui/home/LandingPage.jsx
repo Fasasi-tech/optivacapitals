@@ -42,15 +42,15 @@ useEffect(() => {
     </div>
       <div className='flex flex-grow flex-col lg:flex-row items-start  lg:items-center h-[50%]  justify-normal lg:justify-between'>
         <div className='lg:w-1/3 p-4  order-2 lg:order-1' >
-          <h1 className='text-2xl  md:text-4xl lg:text-6xl font-black text-[#722f37] font-libre-baskerville'>Leave Management</h1>
-          <p className='mt-4 font-libre-baskerville  font-bold text-lg text-blue-900'> Streamline your leave request, apply for time-off in minutes.</p>
+          <h1 className='text-2xl font-black text-[#722f37] font-libre-baskerville'>Leave Management</h1>
+          <p className='mt-4 font-libre-baskerville  font-bold text-xl text-blue-900'> Streamline your leave request, apply for time-off in minutes.</p>
           {isAuthenticated ? (
              <div className='mt-4 lg:mt-16 '>
-              <button onClick={handleSignOut} className='w-full md:w-auto px-16 rounded-md text-lg font-bold hover:bg-[#b6868c]  bg-[#722f37]  py-4'>Logout</button>
+              <button onClick={handleSignOut} className='w-full md:w-auto px-16 rounded-md  font-bold hover:bg-[#b6868c]  bg-[#722f37]  py-4'>Logout</button>
              </div>
           ):(
             <div className='mt-4 lg:mt-16 '>
-              <button type='submit' onClick={handleSignIn} className='w-full md:w-auto px-16 rounded-md text-lg font-bold hover:bg-[#b6868c]  bg-[#722f37]  py-4'>Login</button>
+              <button type='submit' onClick={handleSignIn} className='w-full md:w-auto px-16 rounded-md font-bold hover:bg-[#b6868c]  bg-[#722f37]  py-4'>Login</button>
             </div>
           )
           }

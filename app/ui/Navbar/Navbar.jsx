@@ -34,9 +34,9 @@ const Navbar = () => {
       { isAuthenticated &&
           (<div className='w-full p-0 lg:px-4'>
               <div className='mt-8'>
-                  <div className='bg-white dark:bg-slate-800 px-2 lg:p-4 mx-4 py-2 xl:py-4 rounded-md flex items-center justify-between align-center'>
+                  <div className='bg-white dark:bg-slate-800 px-2 lg:p-4 mx-4 py-2  rounded-md flex items-center justify-between align-center'>
                       <FaBars
-                      className="text-[#722f37] text-xl  xl:text-3xl   cursor-pointer"
+                      className="text-[#722f37] text-xl  cursor-pointer"
                       onClick={handleActiveMenu}
                   />
                   <ToggleMode/>

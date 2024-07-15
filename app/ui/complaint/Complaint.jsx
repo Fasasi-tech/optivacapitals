@@ -152,10 +152,10 @@ const Complaint = () => {
                 handleSubmit,
                 isSubmitting
             }) =>(
-                <div className='lg:w-[100%] w-full h-full md:mt-8 py-4 md:py-12 px-4  md:px-12   my-auto'>
+                <div className=' w-full h-full md:mt-8 py-4 md:py-12 px-4  md:px-12   my-auto'>
                     <form onSubmit={handleSubmit}>
-                        <div className='flex justify-start text-sm lg:text-lg xl:text-2xl  font-medium mb-8'>
-                            <h1 className='font-libre-baskerville font-bold text-lg xl:text-4xl text-[#722f37]'>Complaint Form</h1>
+                        <div className='flex justify-start   font-medium mb-8'>
+                            <h1 className='font-libre-baskerville font-bold  text-[#722f37]'>Complaint Form</h1>
                         </div>
                         <div className='grid lg:grid-cols-2 place-items-center  gap-x-8'>
                             <div className='h-12 mb-12 w-full'>
