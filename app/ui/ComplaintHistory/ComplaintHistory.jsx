@@ -33,7 +33,13 @@ const ComplaintHistory = () => {
 
     console.log(value, 'valueResult')
 
-    const result = value.filter((i) => i.Company_Email === findCompanyEmail)
+    const sortedArray= [...value].sort((a,b) =>{
+        const sortA= a.Complaint_No.slice(5)
+        const sortB = b.Complaint_No.slice(5)
+        return sortB - sortA
+    })
+
+    const result = sortedArray.filter((i) => i.Company_Email === findCompanyEmail)
     console.log('res', result)
 
     const result2 = result.filter((r) => r.Status ==='Closed')

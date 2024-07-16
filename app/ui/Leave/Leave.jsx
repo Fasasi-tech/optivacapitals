@@ -249,7 +249,7 @@ const Leave = () => {
               }, [values.Start_Date, values.Days_Applied]);
                 
               return (
-            <div className=' w-full h-full md:mt-8 py-4 md:py-12 px-4  md:px-12   my-auto'>
+            <div className=' w-full h-full   md:mt-8 py-4 md:py-12 px-4  md:px-12   my-auto'>
                 <form onSubmit={handleSubmit}>
                     <div className='flex justify-start  font-medium mb-8'>
                         <h1 className='font-libre-baskerville font-bold  text-[#722f37]'>Leave Application Registration</h1>

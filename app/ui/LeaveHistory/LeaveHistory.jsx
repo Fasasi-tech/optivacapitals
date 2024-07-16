@@ -37,8 +37,8 @@ const LeaveHistory = () => {
      
 
      const sortedDateArray = [...value].sort((a,b) => {
-        const dateA = new Date(a.Start_Date);
-        const dateB= new Date(b.Start_Date)
+        const dateA = a.Application_Code.slice(3);
+        const dateB= b.Application_Code.slice(3)
         return dateB - dateA
      })
   

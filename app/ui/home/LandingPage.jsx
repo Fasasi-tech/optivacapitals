@@ -1,8 +1,8 @@
 'use client'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useMsal } from '@azure/msal-react'
 import {useDispatch, useSelector} from 'react-redux'
-import { signIn, signOut } from '../slices/authActions'
+import { loadAuthState, signIn, signOut } from '../slices/authActions'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import landingImage from '../../../public/cropped.png'
@@ -15,22 +15,44 @@ const LandingPage = () => {
   const { instance, accounts } = useMsal();
   const router = useRouter();
 
-  const handleSignIn = () => {
-    dispatch(signIn(instance, accounts));
-};
 
-const handleSignOut = () => {
-  dispatch(signOut(instance));
-};
+//   const handleSignIn = () => {
+//     dispatch(signIn(instance, accounts));
+// };
+
+// const handleSignOut = () => {
+//   dispatch(signOut(instance));
+// };
 
 useEffect(() => {
   if (isAuthenticated){
-    router.push('/Complaint')
+    router.push('/History')
   } 
 }, [router, isAuthenticated])
 
 
+
+
+
+
+const handleSignIn = () => {
+  dispatch(signIn(instance, accounts));
+
+};
+
+const handleSignOut = () => {
+dispatch(signOut(instance));
+
+};
+
+if (isAuthenticated) {
+  return null; // or you can show a loading spinner
+}
+
+
+
   return (
+    
     <div className='h-screen overflow-hidden flex flex-col'>
     <div className='flex-shrink-0 p-4'>
       <Image
@@ -42,7 +64,7 @@ useEffect(() => {
     </div>
       <div className='flex flex-grow flex-col lg:flex-row items-start  lg:items-center h-[50%]  justify-normal lg:justify-between'>
         <div className='lg:w-1/3 p-4  order-2 lg:order-1' >
-          <h1 className='text-2xl font-black text-[#722f37] font-libre-baskerville'>Leave Management</h1>
+          <h1 className='text-2xl lg:text-4xl font-black text-[#722f37] font-libre-baskerville'>Leave Management</h1>
           <p className='mt-4 font-libre-baskerville  font-bold text-xl text-blue-900'> Streamline your leave request, apply for time-off in minutes.</p>
           {isAuthenticated ? (
              <div className='mt-4 lg:mt-16 '>

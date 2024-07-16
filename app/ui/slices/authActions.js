@@ -72,6 +72,8 @@ export const signIn = (instance) => async (dispatch) => {
     const authState = { isAuthenticated: true, user: serializedUser, accessToken, graphAccessToken };
     dispatch(setAuthState({...authState }));
     
+      // Save auth state to localStorage to persist across page refreshes --new code
+      localStorage.setItem('authState', JSON.stringify(authState));
   } catch (error) {
     // console.error('Login failed:', error);
   }
@@ -81,7 +83,18 @@ export const signOut = (instance) => async (dispatch) => {
   try {
     await instance.logoutPopup();
     dispatch(logout());
+
+     // Clear auth state from localStorage on sign out-- new code
+     localStorage.removeItem('authState');
   } catch (error) {
     //console.error('Logout failed:', error);
+  }
+};
+
+// Load auth state from localStorage on app initialization --new code
+export const loadAuthState = () => (dispatch) => {
+  const authState = JSON.parse(localStorage.getItem('authState'));
+  if (authState) {
+    dispatch(setAuthState(authState));
   }
 };

@@ -16,7 +16,9 @@ const LayoutContent = ({children}) => {
         <div className="fixed md:sticky md:top-0 bg-main-bg dark:bg-main-dark-bg w-full">
             <Navbar />
         </div>
+        <div className='mt-24 mb-8 md:mt-4'>
         {children}
+        </div>
     </div>
     </>
   )
