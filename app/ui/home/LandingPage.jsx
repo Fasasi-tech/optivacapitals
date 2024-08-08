@@ -57,9 +57,9 @@ const handleSignOut = () => {
 
 
 
-if (isAuthenticated) {
-  return null; // or you can show a loading spinner
-}
+// if (isAuthenticated) {
+//   return null; // or you can show a loading spinner
+// }
 
 
 
