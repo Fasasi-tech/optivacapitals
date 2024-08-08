@@ -64,6 +64,14 @@ const ComplaintHistory = () => {
 
     const paginatedData = paginate(result2, itemsPerPage, currentPage)
 
+    const formatDateWithCommas = (date) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const dateString = date.toLocaleDateString('en-US', options);
+      
+      // Ensure the format is correct by splitting and joining
+      const dateParts = dateString.split(' ');
+      return `${dateParts[0]}, ${dateParts[1].replace(',', '')}, ${dateParts[2]}`;
+    };
   return (
     <>
      <div className='flex justify-start  font-medium mb-8'>
@@ -92,7 +100,7 @@ const ComplaintHistory = () => {
                     <TableRow key={index}>
                         <TableCell>{i.Complaint_No}</TableCell>
                         <TableCell>{i.Company_Email}</TableCell>
-                        <TableCell>{i.Date_of_incident}</TableCell>
+                        <TableCell>{formatDateWithCommas(new Date(i.Date_of_incident))}</TableCell>
                         <TableCell>{i.Department_Code}</TableCell>
                         <TableCell>{i.Details_of_Incident}</TableCell>
                         <TableCell>{i.Employee_Name}</TableCell>

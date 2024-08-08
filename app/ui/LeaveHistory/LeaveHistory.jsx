@@ -64,6 +64,15 @@ const LeaveHistory = () => {
 
     }
 
+    const formatDateWithCommas = (date) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const dateString = date.toLocaleDateString('en-US', options);
+      
+      // Ensure the format is correct by splitting and joining
+      const dateParts = dateString.split(' ');
+      return `${dateParts[0]}, ${dateParts[1].replace(',', '')}, ${dateParts[2]}`;
+    };
+
     const paginatedData = paginate(result, itemsPerPage, currentPage)
   return (
     <>
@@ -78,7 +87,7 @@ const LeaveHistory = () => {
                         <TableHead className='py-8'> Company Email </TableHead>
                         <TableHead className='py-8'> Days Applied </TableHead>
                         <TableHead className='py-8'> Employee No </TableHead>
-                        <TableHead className='py-8'> End Date </TableHead>
+                        {/* <TableHead className='py-8'> End Date </TableHead> */}
                         <TableHead className='py-8'> Leave Type </TableHead>
                         <TableHead className='py-8'> Names </TableHead>
                         <TableHead className='py-8'> Reliever Name </TableHead>
@@ -94,12 +103,12 @@ const LeaveHistory = () => {
                         <TableCell>{i.Company_Email}</TableCell>
                         <TableCell>{i.Days_Applied}</TableCell>
                         <TableCell>{i.Employee_No}</TableCell>
-                        <TableCell>{i.End_Date}</TableCell>
+                        {/* <TableCell>{i.End_Date}</TableCell> */}
                         <TableCell>{i.Leave_Type}</TableCell>
                         <TableCell>{i.Names}</TableCell>
                         <TableCell>{i.Reliever_Name}</TableCell>
-                        <TableCell>{i.Return_Date}</TableCell>
-                        <TableCell>{i.Start_Date}</TableCell>
+                        <TableCell>{formatDateWithCommas(new Date(i.Return_Date))}</TableCell>
+                        <TableCell>{formatDateWithCommas(new Date(i?.Start_Date))}</TableCell>
                         <TableCell ><p className={`p-1 w-20 text-center rounded-lg  font-semibold ${i.Status === 'Pending Approval' ? 'bg-blue-200 text-blue-600' : i.Status === 'New' ? 'bg-yellow-100 text-yellow-600' : i.Status === 'Approved' ? 'bg-green-200 text-green-400' : i.Status === 'Rejected' ? 'bg-red-200 text-red-600' :'bg-teal-200 text-teal-600'}`  }>{i.Status}</p></TableCell>
                     </TableRow>
                     ))}

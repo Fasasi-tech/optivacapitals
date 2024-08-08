@@ -247,6 +247,8 @@ const Leave = () => {
                   calculateReturningDate(values.Start_Date, values.Days_Applied);
                 }
               }, [values.Start_Date, values.Days_Applied]);
+
+              const applicantFullName = values.Company_Email && getEmployeeApplicantName(values.Company_Email);
                 
               return (
             <div className=' w-full h-full   md:mt-8 py-4 md:py-12 px-4  md:px-12   my-auto'>
@@ -454,11 +456,19 @@ const Leave = () => {
                                 className='p-2 w-full outline-none border border-solid dark:bg-slate-800 border-slate-300 text-gray-500 h-12 bg-transparent'
                             >
                                 <option>{isLoading && 'Loading'}</option>
-                                    {value.filter( (i) => r_center === i.Department_Code).map((center) =>(
-                                    <option key={center.No} value={center.No} >
-                                         {center.No} {' '} {center.First_Name} {' '}  {center.Last_Name} {' '}  ({center.Department_Code})
-                                    </option>
-                               ))}
+                                    {value
+                                        .filter(i => r_center === i.Department_Code) // First filter by Department_Code
+                                        .filter(center => {
+                                            // Further filter out the applicant name
+                                        const fullName = `${center.First_Name} ${center.Last_Name}`;
+                                        return fullName !== applicantFullName;
+                                    })
+                                        .map(center => (
+                                            <option key={center.No} value={center.No}>
+                                                {center.No} {center.First_Name} {center.Last_Name} ({center.Department_Code})
+                                            </option>
+                                    ))}
+
 
                             </select>
                             {touched.Employee_Reliver &&errors.Employee_Reliver ?<div className='text-red-500 pl-2 font-semibold'>{errors.Employee_Reliver}</div>: null}

@@ -9,6 +9,7 @@ import Loader from '@/app/utils/Loader'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useGetProfilesQuery } from '../slices/profileApiSlice'
+import { useRouter} from 'next/navigation'
 
 
 const Complaint = () => {
@@ -24,10 +25,10 @@ const Complaint = () => {
         return <p>Something went wrong!</p>
     }
 
-   
+    const router = useRouter()
     const {value}= employee_list
   
-    const findCompanyEmail=LeaveData.userPrincipalName
+    const findCompanyEmail=LeaveData?.userPrincipalName
  
     const getEmpNo=value.find((val) => val.Company_E_Mail === findCompanyEmail)
 
@@ -94,9 +95,9 @@ const Complaint = () => {
         try{
             await Complaint(values).unwrap()
             setSubmitting(true)
-            // alert('complaint form submitted succesfully')
             toast.success('Complaint form submitted successfully!');
             resetForm()
+            router.push('/Complaint')
         }catch (err){
            
         if(err && err?.data?.error?.message){
@@ -106,6 +107,8 @@ const Complaint = () => {
             }
         }
      }
+
+     
   return (
     <div className='w-full bg-white dark:bg-slate-800 shadow-lg rounded-lg md:w-full mx-auto'>
         <Formik initialValues={{

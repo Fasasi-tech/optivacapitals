@@ -16,34 +16,46 @@ const LandingPage = () => {
   const router = useRouter();
 
 
-//   const handleSignIn = () => {
-//     dispatch(signIn(instance, accounts));
+
+
+
+// useEffect(() => {
+//   if (isAuthenticated){
+//     router.push('/History')
+//   } 
+// }, [isAuthenticated])
+
+
+
+
+// const handleSignIn = () => {
+//   dispatch(signIn(instance, accounts));
+
 // };
 
 // const handleSignOut = () => {
-//   dispatch(signOut(instance));
+// dispatch(signOut(instance));
+
 // };
 
+
+
 useEffect(() => {
-  if (isAuthenticated){
-    router.push('/History')
-  } 
-}, [router, isAuthenticated])
 
-
-
-
-
+  if (isAuthenticated) {
+    router.push( '/Profile');
+  }
+}, [isAuthenticated, router]);
 
 const handleSignIn = () => {
   dispatch(signIn(instance, accounts));
-
 };
 
 const handleSignOut = () => {
-dispatch(signOut(instance));
-
+  dispatch(signOut(instance));
 };
+
+
 
 if (isAuthenticated) {
   return null; // or you can show a loading spinner

@@ -22,7 +22,7 @@
 
  body {
   background:  rgb(241 245 249);
-  overflow-x:hidden;
+overflow: auto;
 }
 
 *,
@@ -30,8 +30,20 @@
 *::after {
   box-sizing: border-box;
 }
-/*@layer utilities {
+@layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-} */
+}
+
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(170, 98, 98);
+  border-radius: 40px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}

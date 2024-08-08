@@ -6,6 +6,7 @@ const ENDPOINT="https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/HRLeaveApplicationCard
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/HRLeaveApplicationsList
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/ComplaintFormListPage
+//https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/HRCardPageAPI
 
 
 export const employeeApiSlice = apiSlice.injectEndpoints({
@@ -45,7 +46,7 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
             })
         }),
         employeeCard:builder.query({
-            query:(employeeId) =>`${ENDPOINT}/HREmployeeCard('${employeeId}')`,
+            query:(employeeId) =>`${ENDPOINT}/HRCardPageAPI('${employeeId}')`,
             providesTags:['EmployeeCard']
         }),
         complaintListPage:builder.query({

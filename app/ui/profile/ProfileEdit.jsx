@@ -1,17 +1,13 @@
 'use client'
 import React, {useState, useEffect} from 'react'
-import { FiUser } from "react-icons/fi";
-import { FaRegStar, FaPhoneAlt  } from "react-icons/fa";
-import { IoMailOutline } from "react-icons/io5";
-import { BiDetail } from "react-icons/bi";
 import Loader from '@/app/utils/Loader';
 import { useGetProfilesQuery } from '../slices/profileApiSlice';
 import { useEmployeeCardQuery, useGetEmployeesQuery } from '../slices/usersApiSlice';
-import { TbFileDescription } from "react-icons/tb";
-import { GiTeamUpgrade } from "react-icons/gi";
-import { IoFootstepsOutline } from "react-icons/io5";
-import { GiPrivateFirstClass } from "react-icons/gi";
-import { MdMergeType,  MdAccountBalance, MdOutlineSubtitles  } from "react-icons/md";
+import banner from './../../../app/../public/banner.png'
+import Image from 'next/image';
+import { SiJirasoftware } from "react-icons/si";
+import { FaLocationDot } from "react-icons/fa6";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 const ProfileEdit = () => {
 
@@ -29,7 +25,8 @@ const ProfileEdit = () => {
           const response = employee_list.value.find(val => generateReliever === val.Company_E_Mail);
 
           if (response) {
-            setAdd(response.No);
+            // setAdd(response.No);
+            setAdd('OCP00101')
           }
         }
       }, [employee_list, getReliever]);
@@ -42,32 +39,141 @@ const ProfileEdit = () => {
     if (error ||loadingError || employee_list_error){
         return <div className='text-[#722f37]'>oops, error fetching data</div>
     }
+
+    console.log(data, 'datum')
+    const f_name= data?.first_name.slice(0,1).toUpperCase()
+    const l_names=data?.last_name.slice(0,1).toUpperCase()
+    const d= new Date(data?.date_of_joining)
+    const d_o_b= new Date(data?.d_o_b)
+    const date1= d_o_b
+    const date2 = new Date()
+    const d_o_j= new Date(data?.date_of_joining)
+    const probationDate = new Date(data?.Probation_Date_3mnths)
+    const confirmationDate = new Date(data?.Confirmation_Date)
+
+    const formatDateWithCommas = (date) => {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const dateString = date.toLocaleDateString('en-US', options);
     
+    // Ensure the format is correct by splitting and joining
+    const dateParts = dateString.split(' ');
+    return `${dateParts[0]}, ${dateParts[1].replace(',', '')}, ${dateParts[2]}`;
+  };
+
+    const calculateDateDifference = (startDate, endDate) => {
+      let years = endDate.getFullYear() - startDate.getFullYear();
+      let months = endDate.getMonth() - startDate.getMonth();
+      let days = endDate.getDate() - startDate.getDate();
+  
+      // Adjust if the end day is less than the start day
+      if (days < 0) {
+          months -= 1;
+          const previousMonth = new Date(endDate.getFullYear(), endDate.getMonth(), 0);
+          days += previousMonth.getDate();
+      }
+  
+      // Adjust if the end month is less than the start month
+      if (months < 0) {
+          years -= 1;
+          months += 12;
+      }
+  
+      return `${years} Years, ${months} Months, and ${days} Days`;
+  };
+    
+
+
   return (
-    <>
+    <div className='relative'>
+         <div className=" rounded-lg shadow-md bg-white dark:bg-slate-800 w-full mb-4 md:h-[20rem] h-[24rem]">
+            <div className='flex flex-col  items-center '>
+                <div className=" bg-cover bg-center">
+                    <Image
+                        alt="banner"
+                        src={banner}
+                        quality={100}
+                        style={{
+                            objectFit: 'cover',
+                          }}
+                          className='h-40 rounded-t-lg'
+
+                    />
+                </div>
+                <div className="w-24 h-24 md:w-40 md:h-40 absolute gap-2 top-32 left-8">
+                  <div className="w-full h-full flex items-center justify-center bg-[#b4898e] text-white  font-bold rounded-md">
+                      <p className='text-4xl md:text-6xl rounded-full text-[#722f37] font-serif'>{`${f_name}${l_names}`}</p>  
+                  </div>    
+                </div>
+            </div>
+            <div className='absolute top-[12rem] left-36 md:left-56'>
+              <h3 className='font-medium text-sm md:text-2xl text-gray-500'>{`${data?.first_name.toUpperCase()} ${data?.last_name.toUpperCase()}`}</h3>
+              <div className='flex flex-wrap md:flex-nowrap items-center justify-start gap-4 mt-4'>
+                <div className=' text-gray-400' >
+                      <p className='font-medium text-gray-400 flex gap-2 items-center '><SiJirasoftware /> {`${data?.job_description}`}</p>
+                  </div>
+                  <div className='flex items-center gap-2 text-gray-400'>
+                      <p className='font-medium text-gray-400 flex gap-2 items-center'><FaLocationDot />{`${data?.country}`}</p>
+                  </div>
+                  <div className='flex items-center gap-2 text-gray-400'>
+                      
+                      <p className='font-medium text-gray-400 flex gap-2 items-center'><FaRegCalendarAlt />{`joined ${d.toDateString()}`}</p>
+                  </div> 
+              </div>
+            </div>
+        </div>
         {
             data && (
                 <div className="flex flex-start  ">
-                    <div className="flex flex-col bg-white dark:bg-slate-800 w-full  px-4 md:w-1/2  py-12 border rounded-lg border-dashed">
-                        <p className="text-[#989898] font-extrabold" >Profile Details</p>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'><FiUser className='text-[#722f37]'/></span>First Name:</p> <p>{data.First_Name}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'><FiUser className='text-[#722f37]'/></span>Last Name:</p><p>{data.Last_Name}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'><IoMailOutline className='text-[#722f37]'/></span>Company Email:</p><p>{data.Company_E_Mail}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'><FiUser className='text-[#722f37]'/></span>Supervisor Name:</p><p>{data.SupervisorNames}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'><FaRegStar className='text-[#722f37]' /></span>Department:</p ><p> {data.Department_Code}</p></div>
-                        <div className="text-[#989898] pt-4 flex flex-wrap items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans '><span className='font-medium'> <MdOutlineSubtitles  className='text-[#722f37]' /></span>Job Title:</p> <p className='break-words'> {data.Job_Title}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'> <TbFileDescription className='text-[#722f37]'/></span>Job Description:</p> <p>{data.Job_Description}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'> < GiTeamUpgrade  className='text-[#722f37]'/></span>Salary Grade:</p> <p>{data.Salary_Grade}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'> <IoFootstepsOutline className='text-[#722f37]'/></span>Salary Step:</p> <p>{data.Salary_Step}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'> <GiPrivateFirstClass className='text-[#722f37]'/></span>Employee Classification:</p> <p>{data.Employee_Classification}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'> <MdMergeType  className='text-[#722f37]'/></span>Employment Type:</p> <p>{data.Employment_Type}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'> < MdAccountBalance  className='text-[#722f37]'/></span>Annual Leave Balance:</p> <p>{data.Leave_Balance}</p></div>
+                    <div className="flex flex-col bg-white dark:bg-slate-800 w-full  px-4   py-12 border rounded-lg border-dashed">
+                        <p className="text-[#722f37] font-extrabold border-b border-gray-200" >Profile Details</p>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Employee No:</p> <p>{data.No}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>First Name:</p> <p>{data.first_name}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Last Name:</p><p>{data.last_name}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>citizenship:</p><p>{data.Citizenship}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Leave Status</p> <p>{data.leave_status}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span> City:</p> <p>{data.city}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Supervisor Name:</p><p>{data.supervisor}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Department:</p ><p> {data.department_code}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Residential Address:</p> <p>{data.residential_address}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>status:</p> <p>{data.status}</p></div>
+
+                        <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Communication Details</p>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Company Email:</p><p>{data.company_email}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Personal Email</p> <p>{data.personal_email}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>phone</p> <p>{data.phone}</p></div>
+
+                        <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Personal Details</p>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Marital Status:</p><p>{data.marital_status}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Gender</p> <p>{data.gender}</p></div>
+
+                        <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Important Dates</p>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Date of Birth:</p> <p>{`${formatDateWithCommas(d_o_b)}`}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Age:</p> <p>{calculateDateDifference(date1, date2)}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Date of Joining the Company:</p> <p>{`${formatDateWithCommas(d_o_j)}`}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Length of Service:</p> <p>{calculateDateDifference(d_o_j, date2)}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Probation date:</p> <p>{`${formatDateWithCommas(probationDate)}`}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Confirmation date:</p> <p>{`${formatDateWithCommas(confirmationDate)}`}</p></div>
+
+                        <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Job Details</p>
+                        <div className="text-[#989898] pt-4 flex flex-wrap items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans '><span className='font-medium'> </span>Job Title:</p> <p className='break-words'> {data.job_title}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Job Description:</p> <p>{data.job_description}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Salary Grade:</p> <p>{data.Salary_Grade}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Salary Step:</p> <p>{data.Salary_Step}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Employee Classification:</p> <p>{data.Employee_Classification}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Employment Type:</p> <p>{data.employment_type}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'> </span>NHIF NO:</p> <p>{data.nhif_no}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Payroll Filter Group</p> <p>{data.payroll_filter_group}</p></div>
+
+                        <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Leave Details</p>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Annual Leave:</p> <p>{data.totai_leave}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Total Leave Taken:</p> <p>{data.total_leave_taken}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span> Leave Balance:</p> <p>{data.leave_balance}</p></div>
 
                     </div>
                 </div>
             )
         }
-    </>
+    </div>
   )
 }
 
