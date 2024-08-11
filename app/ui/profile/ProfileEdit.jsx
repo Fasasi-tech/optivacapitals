@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import Loader from '@/app/utils/Loader';
 import { useGetProfilesQuery } from '../slices/profileApiSlice';
-import { useEmployeeCardQuery, useGetEmployeesQuery } from '../slices/usersApiSlice';
+import { useDownloadPdfMutation, useEmployeeCardQuery, useGetEmployeesQuery } from '../slices/usersApiSlice';
 import banner from './../../../app/../public/banner.png'
 import Image from 'next/image';
 import { SiJirasoftware } from "react-icons/si";
@@ -12,6 +12,50 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 const ProfileEdit = () => {
 
     const [add, setAdd] = useState(null);
+
+    const [employeeNo, setEmployeeNo] = useState('');
+  const [periodDate, setPeriodDate] = useState('');
+  const [downloadPdf] = useDownloadPdfMutation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      employeeNo,
+      periodDate,
+    };
+
+
+    try {
+      const response = await downloadPdf(data).unwrap();
+
+      // Extract the Base64 string from the 'value' field in the response
+      const base64String = response.value;
+
+      // Use .replace() with a global regular expression to remove \r\n
+      const cleanedResponse = base64String.replace(/(\r\n|\n|\r)/gm, "");
+
+      // Convert cleaned Base64 response to a Blob
+      const byteCharacters = atob(cleanedResponse);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+      // Download the PDF
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `payslip_${employeeNo}_${periodDate}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+    } catch (error) {
+      console.error('Failed to download PDF:', error);
+    }
+  };
 
     const {data:getReliever, isLoading:loadingReliever, error:loadingError} = useGetProfilesQuery()
     const {data:employee_list, isLoading:employee_list_loading, error:employee_list_error} = useGetEmployeesQuery()
@@ -170,9 +214,38 @@ const ProfileEdit = () => {
                         <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span> Leave Balance:</p> <p>{data.leave_balance}</p></div>
 
                     </div>
+
+                    
                 </div>
             )
         }
+        <div>
+        <form onSubmit={handleSubmit}>
+      <div>
+        <label>
+          Employee Number:
+          <input
+            type="text"
+            value={employeeNo}
+            onChange={(e) => setEmployeeNo(e.target.value)}
+            required
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Period Date:
+          <input
+            type="date"
+            value={periodDate}
+            onChange={(e) => setPeriodDate(e.target.value)}
+            required
+          />
+        </label>
+      </div>
+      <button type="submit">Download Pay Slip</button>
+    </form>
+        </div>
     </div>
   )
 }

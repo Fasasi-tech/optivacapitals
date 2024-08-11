@@ -57,15 +57,15 @@ const handleSignOut = () => {
 
 
 
-// if (isAuthenticated) {
-//   return null; // or you can show a loading spinner
-// }
+if (isAuthenticated) {
+  return null; // or you can show a loading spinner
+}
 
 
 
   return (
     
-    <div className='h-screen overflow-hidden flex flex-col'>
+    <div className='h-screen z-50 pr-0 lg:pr-60 overflow-hidden flex flex-col'>
     <div className='flex-shrink-0 p-4'>
       <Image
           src={logo}

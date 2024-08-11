@@ -38,6 +38,13 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
                 body:data
             })
         }),
+        downloadPdf:builder.mutation({
+            query:(data)=>({
+             url:'https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/paySlipInteg_GetPaySlip?Company=9981f8b7-081c-ec11-bb75-000d3a2200ea',
+             method:'POST',
+             body:data
+            })
+        }),
         leave:builder.mutation({
             query:(data) =>({
                 url:`${ENDPOINT}/HRLeaveApplicationCard`,
@@ -59,4 +66,4 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
     overrideExisting: true,
 })
 
-export const { useComplaintMutation, useComplaintListPageQuery, useLeaveMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useEmployeeCardQuery} = employeeApiSlice
+export const { useComplaintMutation, useDownloadPdfMutation, useComplaintListPageQuery, useLeaveMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useEmployeeCardQuery} = employeeApiSlice

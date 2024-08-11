@@ -9,7 +9,7 @@ const LayoutContent = ({children}) => {
     const {open} = useStateContext()
   return (
     <>
-    <div  className={`${open ? 'w-60 fixed z-50  dark:bg-secondary-dark-bg bg-white':'w-0'}`}>
+    <div  className={`${open ? 'w-60 fixed z-40  dark:bg-secondary-dark-bg bg-white':'w-0'}`}>
         <Sidebar />
     </div>
     <div className={` bg-main-bg min-h-screen w-full overflow-x-auto  ${open ? 'md:ml-60':'flex-1'}`}>
