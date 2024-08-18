@@ -18,7 +18,6 @@ const LandingPage = () => {
 
 
 
-
 // useEffect(() => {
 //   if (isAuthenticated){
 //     router.push('/History')

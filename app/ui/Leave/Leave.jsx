@@ -2,28 +2,28 @@
 import React, {useState, useEffect} from 'react'
 import {Formik} from 'formik'
 import { Input } from '@/components/ui/input'
-import { useGetEmployeesQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery,  useGetResponsibilityCenterQuery, useLeaveMutation } from '../slices/usersApiSlice'
+import { useGetEmployeesQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery,  useGetResponsibilityCenterQuery, useLeavesMutation } from '../slices/usersApiSlice'
 import Loader from '@/app/utils/Loader'
 import { useGetProfilesQuery } from '../slices/profileApiSlice'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 const Leave = () => {
     const [returningDate, setReturningDate] = useState('');
-    const {data:responsibility_center, isLoading, error} = useGetResponsibilityCenterQuery()
+    // const {data:responsibility_center, isLoading, error} = useGetResponsibilityCenterQuery()
     const {data:leave_period, isLoading:leave_period_loading, error:leave_error}= useGetLeavePeriodQuery()
     const {data:leave_type, isLoading:leave_type_loading, error:leave_type_error}=useGetLeaveTypesQuery()
     const {data:employee_list, isLoading:employee_list_loading, error:employee_list_error} = useGetEmployeesQuery()
    const {data:getReliever, isLoading:loadingReliever, error:loadingError} = useGetProfilesQuery()
 
-    const [Leave, {status, error:submitError, isLoading:Loading}] = useLeaveMutation()
-    if(isLoading || leave_period_loading || leave_type_loading || employee_list_loading  ){
+    const [Leaves, {status, error:submitError, isLoading:Loading}] = useLeavesMutation()
+    if( employee_list_loading || leave_period_loading  ){
         return <Loader />
     }
 
         
-    
+    console.log(employee_list)
 
-    if (error || leave_error || leave_type_error || employee_list_error ){
+    if ( employee_list_error || leave_error || leave_type_loading ){
         return <p>Something went wrong!</p>
     }
 
@@ -151,7 +151,7 @@ const Leave = () => {
     try{
 
         const {Responsibility_Center, ...restValues}= values
-        await Leave(restValues).unwrap()
+        await Leaves(restValues).unwrap()
         setSubmitting(true)
         // alert('complaint form submitted succesfully')
         toast.success('Leave form submitted successfully');
@@ -353,12 +353,12 @@ const Leave = () => {
                                 placeholder='Leave Period'
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid  border-slate-300 text-gray-500 h-12 bg-transparent  '
                             >
-                               <option>{isLoading && 'Loading'}</option>
-                               {leave_period.value.map((center) =>(
+                               <option>{leave_period_loading && 'Loading'}</option> 
+                                {leave_period.value.map((center) =>(
                                 <option key={center.Id} value={center.Id} >
                                     {center.Period_Code}
                                 </option>
-                               ))}
+                               ))} 
                             </select>
                             {touched.Leave_Period && errors.Leave_Period ?<div className='text-red-500 pl-2 font-semibold'>{errors.Leave_Period}</div>: null}
                         </div>
@@ -375,12 +375,12 @@ const Leave = () => {
                                 onClick={handleLeaveTypeClick}
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid  border-slate-300 text-gray-500 h-12 bg-transparent  '
                             >
-                                <option>{isLoading && 'Loading'}</option>
+                                 <option>{leave_type_loading && 'Loading'}</option>
                                     {leave_type.value.map((center) =>(
                                     <option key={center.Id} value={center.Id} >
                                     {center.Code}
                                 </option>
-                               ))}
+                               ))} 
                             </select>
                             {touched.Leave_Type &&errors.Leave_Type ?<div className='text-red-500 pl-2 font-semibold'>{errors.Leave_Type}</div>: null}
                         </div>
@@ -455,15 +455,14 @@ const Leave = () => {
                                 onClick={handleEmployeeTypeClick}
                                 className='p-2 w-full outline-none border border-solid dark:bg-slate-800 border-slate-300 text-gray-500 h-12 bg-transparent'
                             >
-                                <option>{isLoading && 'Loading'}</option>
+                                <option>{employee_list_loading && 'Loading'}</option> 
                                     {value
                                         .filter(i => r_center === i.Department_Code) // First filter by Department_Code
                                         .filter(center => {
                                             // Further filter out the applicant name
                                         const fullName = `${center.First_Name} ${center.Last_Name}`;
                                         return fullName !== applicantFullName;
-                                    })
-                                        .map(center => (
+                                    }).map(center => (
                                             <option key={center.No} value={center.No}>
                                                 {center.No} {center.First_Name} {center.Last_Name} ({center.Department_Code})
                                             </option>

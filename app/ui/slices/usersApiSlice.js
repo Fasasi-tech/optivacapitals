@@ -7,7 +7,7 @@ const ENDPOINT="https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/HRLeaveApplicationsList
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/ComplaintFormListPage
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/HRCardPageAPI
-
+const backendEndPoint ="https://optiva-capitals.onrender.com/api/v1/employees"
 
 export const employeeApiSlice = apiSlice.injectEndpoints({
     endpoints:(builder) => ({
@@ -16,49 +16,68 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
             providesTags:['Employee'],
         }),
         getLeavePeriod:builder.query({
-            query:() =>`${ENDPOINT}/HRLeavePeriodList`,
+            query:() =>`${backendEndPoint}/leavePeriods`,
             providesTags:['LeavePeriod']
         }),
         getLeaveTypes:builder.query({
-            query:() => `${ENDPOINT}/HrLeaveTypes`,
+            query:() => `${backendEndPoint}/leaveTypes`,
             providesTags:['LeaveTypes']
         }),
         getEmployees:builder.query({
-            query:() =>`${ENDPOINT}/HREmployeeList`,
+            query:() =>backendEndPoint,
             providesTags:['EmployeesList']
         }),
         getLeave:builder.query({
-            query:() =>`${ENDPOINT}/HRLeaveApplicationsList`,
+            query:() =>`${backendEndPoint}/history`,
             providesTags:['LeaveHistory']
         }),
         complaint:builder.mutation({
             query:(data) =>({
-                url:`${ENDPOINT}/ComplaintFormCard`,
+                url:`${backendEndPoint}/complaint`,
                 method:'POST',
                 body:data
             })
         }),
         downloadPdf:builder.mutation({
             query:(data)=>({
-             url:'https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/paySlipInteg_GetPaySlip?Company=9981f8b7-081c-ec11-bb75-000d3a2200ea',
+             url:backendEndPoint,
              method:'POST',
              body:data
             })
         }),
-        leave:builder.mutation({
+        leaves:builder.mutation({
             query:(data) =>({
-                url:`${ENDPOINT}/HRLeaveApplicationCard`,
+                url:`${backendEndPoint}/leave`,
+                method:'POST',
+                body:data
+            })
+        }),
+        printPaySlip:builder.mutation({
+            query:(data) =>({
+                url:`${backendEndPoint}`,
                 method:'POST',
                 body:data
             })
         }),
         employeeCard:builder.query({
-            query:(employeeId) =>`${ENDPOINT}/HRCardPageAPI('${employeeId}')`,
+            query:(employeeId) =>`${backendEndPoint}/card/${employeeId}`,
             providesTags:['EmployeeCard']
         }),
+        payslipCard:builder.query({
+            query:(employeeId) =>`${backendEndPoint}/payslip/${employeeId}`,
+            providesTags:['PaySlipCard']
+        }),
         complaintListPage:builder.query({
-            query:() => `${ENDPOINT}/ComplaintFormListPage`,
+            query:() => `${backendEndPoint}/complaint`,
             providesTags:['complaintListPage']
+        }),
+        payroll:builder.query({
+            query:() => `${backendEndPoint}/payroll`,
+            providesTags:['payroll']
+        }),
+        payrollDate:builder.query({
+            query:() => `${backendEndPoint}/payrollDate`,
+            providesTags:['payrollDate']
         })
 
        
@@ -66,4 +85,4 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
     overrideExisting: true,
 })
 
-export const { useComplaintMutation, useDownloadPdfMutation, useComplaintListPageQuery, useLeaveMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useEmployeeCardQuery} = employeeApiSlice
+export const { useComplaintMutation, usePrintPaySlipMutation, usePayrollDateQuery, usePayrollQuery,usePayslipCardQuery, useDownloadPdfMutation, useComplaintListPageQuery, useLeavesMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useEmployeeCardQuery} = employeeApiSlice

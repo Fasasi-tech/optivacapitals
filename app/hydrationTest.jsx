@@ -1,13 +1,17 @@
-"use client"
+import dynamic from 'next/dynamic';
+
+const NoSSRComponent = dynamic(() => import('./NoSSRComponent'), { ssr: false });
 
 const HydrationTest = () => {
 
-  const a = Math.random();
+  // const a = Math.random();
   
-  console.log(a);
+  // console.log(a);
 
   return (
-    <div>{a}</div>
+    <div>
+        <NoSSRComponent />
+    </div>
   )
 }
 

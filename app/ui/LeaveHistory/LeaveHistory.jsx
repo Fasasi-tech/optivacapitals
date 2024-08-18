@@ -18,7 +18,6 @@ const LeaveHistory = () => {
     const {data:LeaveData, isLoading, error} =useGetLeaveQuery()
     const {data, isLoading:HistoryLoading, error:errorLoading} = useGetProfilesQuery()
 
-   
     const [currentPage, setCurrentPage] = useState(1)
     if (isLoading || HistoryLoading){
         return <Loader />

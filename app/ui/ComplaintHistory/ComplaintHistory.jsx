@@ -78,47 +78,47 @@ const ComplaintHistory = () => {
             <h1 className='font-libre-baskerville font-bold  text-[#722f37]'>Complaint History</h1>
         </div>
     <div className='bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg overflow-auto'>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className='py-8'> Complaint No.</TableHead>
-                        <TableHead className='py-8'> Company Email </TableHead>
-                        <TableHead className='py-8'> Date of Incident </TableHead>
-                        <TableHead className='py-8'> Department Code </TableHead>
-                        <TableHead className='py-8'> Details of Incident </TableHead>
-                        <TableHead className='py-8'> Employee Name </TableHead>
-                        <TableHead className='py-8'> Employee No </TableHead>
-                        <TableHead className='py-8'> Job Description </TableHead>
-                        <TableHead className='py-8'> Job Title </TableHead>
-                        <TableHead className='py-8'> Nature of Complaint </TableHead>
-                        <TableHead className='py-8'> Supervisor </TableHead>
-                        <TableHead className='py-8'> Status </TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody >
-                {paginatedData.map((i, index) =>(
-                    <TableRow key={index}>
-                        <TableCell>{i.Complaint_No}</TableCell>
-                        <TableCell>{i.Company_Email}</TableCell>
-                        <TableCell>{formatDateWithCommas(new Date(i.Date_of_incident))}</TableCell>
-                        <TableCell>{i.Department_Code}</TableCell>
-                        <TableCell>{i.Details_of_Incident}</TableCell>
-                        <TableCell>{i.Employee_Name}</TableCell>
-                        <TableCell>{i.Employee_No}</TableCell>
-                        <TableCell>{i.Job_Description}</TableCell>
-                        <TableCell>{i.Job_Title}</TableCell>
-                        <TableCell>{i.Nature_of_Complaint}</TableCell>
-                        <TableCell>{i.Supervisor}</TableCell>
-                        <TableCell ><p className={`p-1 w-20 text-center rounded-md text-white font-semibold ${i.Status === 'Closed' ? 'bg-green-200 text-green-500':  ''}`}>{i.Status}</p></TableCell>
-                    </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            <div className='flex  justify-end pr-10 font-sans text-gray-500 font-bold'>
-                <span>
-                    Page {currentPage} of {totalPages}
-                </span>
-            </div>
+        <Table>
+            <TableHeader>
+                <TableRow>
+                    <TableHead className='py-8'> Complaint No.</TableHead>
+                    <TableHead className='py-8'> Company Email </TableHead>
+                    <TableHead className='py-8'> Date of Incident </TableHead>
+                    <TableHead className='py-8'> Department Code </TableHead>
+                    <TableHead className='py-8'> Details of Incident </TableHead>
+                    <TableHead className='py-8'> Employee Name </TableHead>
+                    <TableHead className='py-8'> Employee No </TableHead>
+                    <TableHead className='py-8'> Job Description </TableHead>
+                    <TableHead className='py-8'> Job Title </TableHead>
+                    <TableHead className='py-8'> Nature of Complaint </TableHead>
+                    <TableHead className='py-8'> Supervisor </TableHead>
+                    <TableHead className='py-8'> Status </TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody >
+            {paginatedData.map((i, index) =>(
+                <TableRow key={index}>
+                    <TableCell>{i.Complaint_No}</TableCell>
+                    <TableCell>{i.Company_Email}</TableCell>
+                    <TableCell>{formatDateWithCommas(new Date(i.Date_of_incident))}</TableCell>
+                    <TableCell>{i.Department_Code}</TableCell>
+                    <TableCell>{i.Details_of_Incident}</TableCell>
+                    <TableCell>{i.Employee_Name}</TableCell>
+                    <TableCell>{i.Employee_No}</TableCell>
+                    <TableCell>{i.Job_Description}</TableCell>
+                    <TableCell>{i.Job_Title}</TableCell>
+                    <TableCell>{i.Nature_of_Complaint}</TableCell>
+                    <TableCell>{i.Supervisor}</TableCell>
+                    <TableCell ><p className={`p-1 w-20 text-center rounded-md text-white font-semibold ${i.Status === 'Closed' ? 'bg-green-200 text-green-500':  ''}`}>{i.Status}</p></TableCell>
+                </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+        <div className='flex  justify-end pr-10 font-sans text-gray-500 font-bold'>
+            <span>
+                Page {currentPage} of {totalPages}
+            </span>
+        </div>
             <div className='flex  justify-end mt-8'>
             <Pagination>
                 <PaginationContent>

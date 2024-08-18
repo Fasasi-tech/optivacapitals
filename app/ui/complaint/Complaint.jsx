@@ -24,7 +24,7 @@ const Complaint = () => {
     if (employee_list_error){
         return <p>Something went wrong!</p>
     }
-
+      
     const router = useRouter()
     const {value}= employee_list
   

@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { SiJirasoftware } from "react-icons/si";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import { Input } from '@/components/ui/input';
 
 const ProfileEdit = () => {
 
@@ -17,45 +18,10 @@ const ProfileEdit = () => {
   const [periodDate, setPeriodDate] = useState('');
   const [downloadPdf] = useDownloadPdfMutation();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const data = {
-      employeeNo,
-      periodDate,
-    };
+ 
 
 
-    try {
-      const response = await downloadPdf(data).unwrap();
-
-      // Extract the Base64 string from the 'value' field in the response
-      const base64String = response.value;
-
-      // Use .replace() with a global regular expression to remove \r\n
-      const cleanedResponse = base64String.replace(/(\r\n|\n|\r)/gm, "");
-
-      // Convert cleaned Base64 response to a Blob
-      const byteCharacters = atob(cleanedResponse);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: 'application/pdf' });
-
-      // Download the PDF
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `payslip_${employeeNo}_${periodDate}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-    } catch (error) {
-      console.error('Failed to download PDF:', error);
-    }
-  };
+   
 
     const {data:getReliever, isLoading:loadingReliever, error:loadingError} = useGetProfilesQuery()
     const {data:employee_list, isLoading:employee_list_loading, error:employee_list_error} = useGetEmployeesQuery()
@@ -69,8 +35,8 @@ const ProfileEdit = () => {
           const response = employee_list.value.find(val => generateReliever === val.Company_E_Mail);
 
           if (response) {
-            // setAdd(response.No);
-            setAdd('OCP00101')
+            setAdd(response.No);
+            // setAdd('OCP00101')
           }
         }
       }, [employee_list, getReliever]);
@@ -170,35 +136,320 @@ const ProfileEdit = () => {
                 <div className="flex flex-start  ">
                     <div className="flex flex-col bg-white dark:bg-slate-800 w-full  px-4   py-12 border rounded-lg border-dashed">
                         <p className="text-[#722f37] font-extrabold border-b border-gray-200" >Profile Details</p>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Employee No:</p> <p>{data.No}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>First Name:</p> <p>{data.first_name}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Last Name:</p><p>{data.last_name}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>citizenship:</p><p>{data.Citizenship}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Leave Status</p> <p>{data.leave_status}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span> City:</p> <p>{data.city}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Supervisor Name:</p><p>{data.supervisor}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Department:</p ><p> {data.department_code}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Residential Address:</p> <p>{data.residential_address}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>status:</p> <p>{data.status}</p></div>
+                        <div className='grid lg:grid-cols-2 place-items-center mt-4  gap-x-8'>
+                          <div className='h-12 mb-12 w-full'>
+                            <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Employee No</label>
+                            <Input
+                                type='text'
+                                value={data.No}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
+                          <div className='h-12 mb-12 w-full'>
+                            <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>First Name</label>
+                            <Input
+                                type='text'
+                                value={data.first_name}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
+                          <div className='h-12 mb-12 w-full'>
+                            <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Last Name</label>
+                            <Input
+                                type='text'
+                                value={data.last_name}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
+                          <div className='h-12 mb-12 w-full'>
+                            <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Citizenship</label>
+                            <Input
+                                type='text'
+                                value={data.Citizenship}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
+                          <div className='h-12 mb-12 w-full'>
+                            <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Leave Status</label>
+                            <Input
+                                type='text'
+                                value={data.leave_status}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
+                          <div className='h-12 mb-12 w-full'>
+                            <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>City</label>
+                            <Input
+                                type='text'
+                                value={data.city}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
+                          <div className='h-12 mb-12 w-full'>
+                            <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Supervisor</label>
+                            <Input
+                                type='text'
+                                value={data.supervisor}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
+                          <div className='h-12 mb-12 w-full'>
+                            <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Department code</label>
+                            <Input
+                                type='text'
+                                value={data.department_code}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
+                          <div className='h-12 mb-12 w-full'>
+                            <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Residential Address</label>
+                            <Input
+                                type='text'
+                                value={data.residential_address}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
+                          <div className='h-12 mb-12 w-full'>
+                            <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Status</label>
+                            <Input
+                                type='text'
+                                value={data.status}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
 
+                        </div>
                         <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Communication Details</p>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Company Email:</p><p>{data.company_email}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Personal Email</p> <p>{data.personal_email}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>phone</p> <p>{data.phone}</p></div>
-
+                        <div className='grid lg:grid-cols-2 place-items-center mt-4  gap-x-8'>
+                          <div className='h-12 mb-12 w-full'>
+                            <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Company Email</label>
+                            <Input
+                                type='text'
+                                value={data.company_email}
+                                placeholder=''
+                                readOnly
+                                className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                            />
+                          </div>
+                          
+                            <div className='h-12 mb-12 w-full'>
+                              <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Personal Email</label>
+                              <Input
+                                  type='text'
+                                  value={data.personal_email}
+                                  placeholder=''
+                                  readOnly
+                                  className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                              />
+                            </div>
+                            <div className='h-12 mb-12 w-full'>
+                              <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Phone</label>
+                              <Input
+                                  type='text'
+                                  value={data.phone}
+                                  placeholder=''
+                                  readOnly
+                                  className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                              />
+                            </div>
+                            
+                        </div>
                         <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Personal Details</p>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Marital Status:</p><p>{data.marital_status}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Gender</p> <p>{data.gender}</p></div>
+                        <div className='grid lg:grid-cols-2 place-items-center mt-4  gap-x-8'>
+                            <div className='h-12 mb-12 w-full'>
+                              <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Marital Status</label>
+                              <Input
+                                  type='text'
+                                  value={data.marital_status}
+                                  placeholder=''
+                                  readOnly
+                                  className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                              />
+                            </div>
+                            <div className='h-12 mb-12 w-full'>
+                              <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Gender</label>
+                              <Input
+                                  type='text'
+                                  value={data.gender}
+                                  placeholder=''
+                                  readOnly
+                                  className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                              />
+                            </div>
+                          </div>
+                          <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Important Dates</p>
+                            <div className='grid lg:grid-cols-2 place-items-center mt-4  gap-x-8'>
+                              <div className='h-12 mb-12 w-full'>
+                                <label htmlFor="" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Date of birth</label>
+                                <Input
+                                    type='text'
+                                    value={`${formatDateWithCommas(d_o_b)}`}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Date of joining the company</label>
+                                <Input
+                                    type='text'
+                                    value={`${formatDateWithCommas(d_o_j)}`}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Age</label>
+                                <Input
+                                    type='text'
+                                    value={calculateDateDifference(date1, date2)}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Length of service</label>
+                                <Input
+                                    type='text'
+                                    value={calculateDateDifference(d_o_j, date2)}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Probation date</label>
+                                <Input
+                                    type='text'
+                                    value={`${formatDateWithCommas(probationDate)}`}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Confirmation date</label>
+                                <Input
+                                    type='text'
+                                    value={`${formatDateWithCommas(confirmationDate)}`}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                            </div>
+                            <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Job Details</p>
+                            <div className='grid lg:grid-cols-2 place-items-center mt-4  gap-x-8'>
+                              <div className='h-12 mb-12 w-full'>
+                                <label htmlFor="" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Job Title</label>
+                                <Input
+                                    type='text'
+                                    value={data.job_title}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Job Description</label>
+                                <Input
+                                    type='text'
+                                    value={data.job_description}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                           
+                          {/* </div>
+                            <div className='grid lg:grid-cols-2 place-items-center mt-4  gap-x-8'> */}
+                              <div className='h-12 mb-12 w-full'>
+                                <label htmlFor="" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Salary Grade</label>
+                                <Input
+                                    type='text'
+                                    value={data.Salary_Grade}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Salary Step</label>
+                                <Input
+                                    type='text'
+                                    value={data.Salary_Step}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Employee classification</label>
+                                <Input
+                                    type='text'
+                                    value={data.Employee_Classification}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Employment Type</label>
+                                <Input
+                                    type='text'
+                                    value={data.employment_type}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>NHIF NO</label>
+                                <Input
+                                    type='text'
+                                    value={data.nhif_no}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              <div className='h-12 mb-12 w-full'>
+                                <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Payroll Filter Group</label>
+                                <Input
+                                    type='text'
+                                    value={data.payroll_filter_group}
+                                    placeholder=''
+                                    readOnly
+                                    className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                                />
+                              </div>
+                              </div>
 
-                        <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Important Dates</p>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Date of Birth:</p> <p>{`${formatDateWithCommas(d_o_b)}`}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Age:</p> <p>{calculateDateDifference(date1, date2)}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Date of Joining the Company:</p> <p>{`${formatDateWithCommas(d_o_j)}`}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Length of Service:</p> <p>{calculateDateDifference(d_o_j, date2)}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Probation date:</p> <p>{`${formatDateWithCommas(probationDate)}`}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Confirmation date:</p> <p>{`${formatDateWithCommas(confirmationDate)}`}</p></div>
+                      
 
-                        <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Job Details</p>
+                        {/* <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Job Details</p>
                         <div className="text-[#989898] pt-4 flex flex-wrap items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans '><span className='font-medium'> </span>Job Title:</p> <p className='break-words'> {data.job_title}</p></div>
                         <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Job Description:</p> <p>{data.job_description}</p></div>
                         <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Salary Grade:</p> <p>{data.Salary_Grade}</p></div>
@@ -206,12 +457,44 @@ const ProfileEdit = () => {
                         <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Employee Classification:</p> <p>{data.Employee_Classification}</p></div>
                         <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Employment Type:</p> <p>{data.employment_type}</p></div>
                         <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'> </span>NHIF NO:</p> <p>{data.nhif_no}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Payroll Filter Group</p> <p>{data.payroll_filter_group}</p></div>
-
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Payroll Filter Group</p> <p>{data.payroll_filter_group}</p></div> */}
                         <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Leave Details</p>
+                        <div className='grid lg:grid-cols-2 place-items-center mt-4  gap-x-8'>
+                            <div className='h-12 mb-12 w-full'>
+                              <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Annual Leave</label>
+                              <Input
+                                  type='text'
+                                  value={data.totai_leave}
+                                  placeholder=''
+                                  readOnly
+                                  className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                              />
+                            </div>
+                            <div className='h-12 mb-12 w-full'>
+                              <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Total Leave Taken</label>
+                              <Input
+                                  type='text'
+                                  value={data.total_leave_taken}
+                                  placeholder=''
+                                  readOnly
+                                  className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                              />
+                            </div>
+                            <div className='h-12 mb-12 w-full'>
+                              <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Leave Balance</label>
+                              <Input
+                                  type='text'
+                                  value={data.leave_balance}
+                                  placeholder=''
+                                  readOnly
+                                  className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
+                              />
+                            </div>
+                          </div>
+                        {/* <p className="text-[#722f37] font-extrabold border-b border-gray-200 mt-8" >Leave Details</p>
                         <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Annual Leave:</p> <p>{data.totai_leave}</p></div>
                         <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span>Total Leave Taken:</p> <p>{data.total_leave_taken}</p></div>
-                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span> Leave Balance:</p> <p>{data.leave_balance}</p></div>
+                        <div className="text-[#989898] pt-4 flex items-center gap-2"><p className='flex items-center gap-2 font-medium font-sans'><span className='font-medium'></span> Leave Balance:</p> <p>{data.leave_balance}</p></div> */}
 
                     </div>
 
@@ -219,33 +502,7 @@ const ProfileEdit = () => {
                 </div>
             )
         }
-        <div>
-        <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          Employee Number:
-          <input
-            type="text"
-            value={employeeNo}
-            onChange={(e) => setEmployeeNo(e.target.value)}
-            required
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Period Date:
-          <input
-            type="date"
-            value={periodDate}
-            onChange={(e) => setPeriodDate(e.target.value)}
-            required
-          />
-        </label>
-      </div>
-      <button type="submit">Download Pay Slip</button>
-    </form>
-        </div>
+       
     </div>
   )
 }

@@ -4,16 +4,16 @@ import { setAuthState, logout } from './authSlice'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: '/',
-    prepareHeaders: async(headers, {getState}) =>{
-        const state = getState()
-        const accessToken = state.auth.accessToken;
+    // prepareHeaders: async(headers, {getState}) =>{
+    //     const state = getState()
+    //     const accessToken = state.auth.accessToken;
       
-         if (accessToken){
-            headers.set('Authorization', `Bearer ${accessToken}`);}
+    //      if (accessToken){
+    //         headers.set('Authorization', `Bearer ${accessToken}`);}
         
 
-        return headers;
-    }
+    //     return headers;
+    // }
     })
    
    
@@ -22,7 +22,7 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
     reducerPath:'employeeApi',
      baseQuery,
-    tagTypes: [ 'Employee', 'EmployeeCard', 'LeavePeriod', 'LeaveTypes', 'EmployeesList', 'LeaveHistory', 'complaintListPage'],  //automated re-fetching
+    tagTypes: [ 'Employee','payrollDate', 'EmployeeCard','payroll', 'PaySlipCard', 'LeavePeriod', 'LeaveTypes', 'EmployeesList', 'LeaveHistory', 'complaintListPage'],  //automated re-fetching
     endpoints: (builder) => ({
 
     })
