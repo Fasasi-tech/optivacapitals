@@ -20,7 +20,7 @@ export const metadata = {
     apple:'/icon/optivac.png',
     other:[
       {
-        reL:'icon',
+        rel:'icon',
         url:'/icon/optivac.png'
       }
     ]

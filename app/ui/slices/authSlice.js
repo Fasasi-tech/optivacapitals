@@ -53,7 +53,7 @@
 
 // export const { setAuthState, logout } = authSlice.actions;
 // export default authSlice.reducer;
-
+'use client'
 
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
