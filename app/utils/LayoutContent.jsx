@@ -6,15 +6,15 @@ import Navbar from '../ui/Navbar/Navbar'
 import Sidebar from '../ui/Sidebar/Sidebar'
 
 const LayoutContent = ({children}) => {
-  // const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-  // useEffect(() => {
-  //   setIsClient(true);
-  // }, []);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
-  // if (!isClient) {
-  //   return null; // Or return a loading spinner, etc.
-  // }
+  if (!isClient) {
+    return null; // Or return a loading spinner, etc.
+  }
     const {open} = useStateContext()
   return (
     <>
