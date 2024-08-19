@@ -92,7 +92,9 @@ const LeaveHistory = () => {
                         <TableHead className='py-8'> Reliever Name </TableHead>
                         <TableHead className='py-8'> Return Date </TableHead>
                         <TableHead className='py-8'> Start Date </TableHead>
+                        <TableHead className='py-8'> Application Date </TableHead>
                         <TableHead className='py-8'> Status </TableHead>
+                       
                     </TableRow>
                 </TableHeader>
                 <TableBody >
@@ -108,6 +110,7 @@ const LeaveHistory = () => {
                         <TableCell>{i.Reliever_Name}</TableCell>
                         <TableCell>{formatDateWithCommas(new Date(i.Return_Date))}</TableCell>
                         <TableCell>{formatDateWithCommas(new Date(i?.Start_Date))}</TableCell>
+                        <TableCell>{formatDateWithCommas(new Date(i.Application_Date))}</TableCell>
                         <TableCell ><p className={`p-1 w-20 text-center rounded-lg  font-semibold ${i.Status === 'Pending Approval' ? 'bg-blue-200 text-blue-600' : i.Status === 'New' ? 'bg-yellow-100 text-yellow-600' : i.Status === 'Approved' ? 'bg-green-200 text-green-400' : i.Status === 'Rejected' ? 'bg-red-200 text-red-600' :'bg-teal-200 text-teal-600'}`  }>{i.Status}</p></TableCell>
                     </TableRow>
                     ))}
