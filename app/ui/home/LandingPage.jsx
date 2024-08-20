@@ -83,7 +83,7 @@ if (isAuthenticated) {
              </div>
           ):(
             <div className='mt-4 lg:mt-16 '>
-              <button type='submit' onClick={handleSignIn} className='w-full md:w-auto px-16 rounded-md font-bold hover:bg-[#b6868c]  bg-[#722f37]  py-4'>Login</button>
+              <button type='submit' onClick={handleSignIn} className='w-full md:w-auto px-16 rounded-md font-bold hover:bg-[#b6868c] text-white  bg-[#722f37]  py-4'>Login</button>
             </div>
           )
           }

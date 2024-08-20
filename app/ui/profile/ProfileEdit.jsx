@@ -2,32 +2,43 @@
 import React, {useState, useEffect} from 'react'
 import Loader from '@/app/utils/Loader';
 import { useGetProfilesQuery } from '../slices/profileApiSlice';
-import { useDownloadPdfMutation, useEmployeeCardQuery, useGetEmployeesQuery } from '../slices/usersApiSlice';
+import { useDownloadPdfMutation, useEmployeeCardQuery, useGetEmployeesQuery, usePictureMutation } from '../slices/usersApiSlice';
 import banner from './../../../app/../public/banner.png'
 import Image from 'next/image';
 import { SiJirasoftware } from "react-icons/si";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { Input } from '@/components/ui/input';
+import { FaUserAlt } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
+import { GoDotFill } from "react-icons/go";
+import { useComplaintListPageQuery } from '../slices/usersApiSlice';
+import { MdOutlineReportProblem } from "react-icons/md";
+import Link from 'next/link';
 
 const ProfileEdit = () => {
 
     const [add, setAdd] = useState(null);
-
-    const [employeeNo, setEmployeeNo] = useState('');
-  const [periodDate, setPeriodDate] = useState('');
-  const [downloadPdf] = useDownloadPdfMutation();
-
- 
-
-
-   
 
     const {data:getReliever, isLoading:loadingReliever, error:loadingError} = useGetProfilesQuery()
     const {data:employee_list, isLoading:employee_list_loading, error:employee_list_error} = useGetEmployeesQuery()
     const { data, isLoading, error } = useEmployeeCardQuery(add ? `${add}` : '', {
         skip: !add, // Skip the query if add is not set
       });
+
+      const {data:complaint, isLoading:complaint_Loading, error:complaint_error} = useComplaintListPageQuery()
+      const {data:profileData, isLoading:HistoryLoading, error:errorLoading} = useGetProfilesQuery()
+
+  
+      const value=complaint?.value
+      const findCompanyEmail = profileData?.userPrincipalName;
+      const [imageSrc, setImageSrc] = useState('');
+      const [fetchBase64Image] = usePictureMutation()
+
+      const complaintResult = value?.filter((i) => i.Company_Email === findCompanyEmail)
+      const complaintResult2 = complaintResult?.filter((r) => r.Status ==='Closed')
+
+      const lengths = complaintResult2?.length
 
       useEffect(() => {
         if (employee_list && getReliever) {
@@ -41,13 +52,38 @@ const ProfileEdit = () => {
         }
       }, [employee_list, getReliever]);
 
+      useEffect(() => {
+        const handleFetchImage = async () => {
+          if (data && data.No) {  
+            try {
+              const payload = { employeeNo: data.No };
+              const response = await fetchBase64Image(payload).unwrap();
+              const dataUrl = `data:image/jpeg;base64,${response.value}`;
+              setImageSrc(dataUrl);
+            } catch (error) {
+              console.error('Error fetching image:', error);
+            }
+          }
+        };
+      
+        handleFetchImage(); 
+       
+      }, [data, fetchBase64Image]);
+      
+      
   
     if(isLoading || loadingReliever || employee_list_loading){
         return <Loader />
     }
 
+   
     if (error ||loadingError || employee_list_error){
         return <div className='text-[#722f37]'>oops, error fetching data</div>
+    }
+
+    
+    if(complaint_Loading || HistoryLoading){
+      return <Loader />
     }
 
     console.log(data, 'datum')
@@ -109,24 +145,38 @@ const ProfileEdit = () => {
 
                     />
                 </div>
-                <div className="w-24 h-24 md:w-40 md:h-40 absolute gap-2 top-32 left-8">
-                  <div className="w-full h-full flex items-center justify-center bg-[#b4898e] text-white  font-bold rounded-md">
-                      <p className='text-4xl md:text-6xl rounded-full text-[#722f37] font-serif'>{`${f_name}${l_names}`}</p>  
-                  </div>    
+                <div className="w-24 h-24 md:w-40 md:h-40 absolute gap-2 top-32 left-8 ">
+                  {imageSrc ? 
+                    (<Image
+                      alt="image"
+                      src={imageSrc}
+                      className='w-full h-full rounded-md'
+                      width={160} // or use the size you prefer
+                      height={160} // or use the size you prefer
+                      />):(
+                        <div className="w-full h-full flex items-center justify-center bg-[#b4898e] text-white  font-bold rounded-md">
+                          <p className='text-4xl md:text-6xl rounded-full text-[#722f37] font-serif'>{`${f_name}${l_names}`}</p>  
+                        </div>    
+                    )} 
                 </div>
             </div>
             <div className='absolute top-[12rem] left-36 md:left-56'>
-              <h3 className='font-medium text-sm md:text-2xl text-gray-500'>{`${data?.first_name.toUpperCase()} ${data?.last_name.toUpperCase()}`}</h3>
+              <h3 className='font-medium text-sm md:text-2xl text-gray-500 flex items-center'>{`${data?.No}`} <GoDotFill /> {' '} {`${data?.first_name.toUpperCase()} ${data?.last_name.toUpperCase()}`}</h3>
               <div className='flex flex-wrap md:flex-nowrap items-center justify-start gap-4 mt-4'>
                 <div className=' text-gray-400' >
                       <p className='font-medium text-gray-400 flex gap-2 items-center '><SiJirasoftware /> {`${data?.job_description}`}</p>
                   </div>
                   <div className='flex items-center gap-2 text-gray-400'>
-                      <p className='font-medium text-gray-400 flex gap-2 items-center'><FaLocationDot />{`${data?.country}`}</p>
+                      <p className='font-medium text-gray-400 flex gap-2 items-center'>< FaPhoneAlt />{`${data?.phone}`}</p>
                   </div>
                   <div className='flex items-center gap-2 text-gray-400'>
                       
                       <p className='font-medium text-gray-400 flex gap-2 items-center'><FaRegCalendarAlt />{`joined ${d.toDateString()}`}</p>
+                  </div>
+                  <div className='flex items-center gap-2 text-gray-400'>
+                    <Link href='/Complaint-History'>
+                      <p className='font-medium text-gray-400 flex gap-2 items-center'><MdOutlineReportProblem />{lengths >0 ?lengths : 0}</p>
+                    </Link>
                   </div> 
               </div>
             </div>

@@ -59,6 +59,13 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
                 body:data
             })
         }),
+        picture:builder.mutation({
+            query:(data) =>({
+                url:`${backendEndPoint}/picture`,
+                method:'POST',
+                body:data
+            })
+        }),
         employeeCard:builder.query({
             query:(employeeId) =>`${backendEndPoint}/card/${employeeId}`,
             providesTags:['EmployeeCard']
@@ -85,4 +92,4 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
     overrideExisting: true,
 })
 
-export const { useComplaintMutation, usePrintPaySlipMutation, usePayrollDateQuery, usePayrollQuery,usePayslipCardQuery, useDownloadPdfMutation, useComplaintListPageQuery, useLeavesMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useEmployeeCardQuery} = employeeApiSlice
+export const { useComplaintMutation,usePictureMutation, usePrintPaySlipMutation, usePayrollDateQuery, usePayrollQuery,usePayslipCardQuery, useDownloadPdfMutation, useComplaintListPageQuery, useLeavesMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useEmployeeCardQuery} = employeeApiSlice
