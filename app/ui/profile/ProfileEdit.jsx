@@ -218,7 +218,7 @@ const ProfileEdit = () => {
             <div className='text-gray-400 absolute top-[22rem] md:top-[16rem]  lg:top-[12rem] right-0 mt-12 mr-2 md:mr-14 lg:mr-8 flex flex-col items-start lg:items-end'>
               <Link href='/Complaint-History'>
                 <p className='font-medium text-gray-400 flex gap-2 items-center text-sm md:text-base'>
-                  Number of complaints: <p className='text-blue-700'>{`${lengths > 0 ? lengths : 0}`}</p>
+                  Number of complaints: <p className='text-[#722f37]'>{`${lengths > 0 ? lengths : 0}`}</p>
                 </p>
               </Link>
             </div>
