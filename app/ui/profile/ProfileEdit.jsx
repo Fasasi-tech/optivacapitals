@@ -52,23 +52,51 @@ const ProfileEdit = () => {
         }
       }, [employee_list, getReliever]);
 
-      useEffect(() => {
-        const handleFetchImage = async () => {
-          if (data && data.No) {  
-            try {
-              const payload = { employeeNo: data.No };
-              const response = await fetchBase64Image(payload).unwrap();
-              const dataUrl = response.value ?`data:image/jpeg;base64,${response.value}` : null;
-              setImageSrc(dataUrl);
-            } catch (error) {
-              console.error('Error fetching image:', error);
-            }
-          }
-        };
+      // useEffect(() => {
+      //   const handleFetchImage = async () => {
+      //     if (data && data.No) {  
+      //       try {
+      //         const payload = { employeeNo: data.No };
+      //         const response = await fetchBase64Image(payload).unwrap();
+      //         const dataUrl = response.value ?`data:image/jpeg;base64,${response.value}` : null;
+      //         setImageSrc(dataUrl);
+      //       } catch (error) {
+      //         console.error('Error fetching image:', error);
+      //       }
+      //     }
+      //   };
       
-        handleFetchImage(); 
+      //   handleFetchImage(); 
        
-      }, [data, fetchBase64Image]);
+      // }, [data, fetchBase64Image]);
+
+    
+  useEffect(() => {
+    const handleFetchImage = async () => {
+      if (data && data.No) {
+        try {
+          const payload = { employeeNo: data.No };
+          const response = await fetchBase64Image(payload).unwrap();
+
+          // Validate if response.value is a valid Base64 string (a basic check)
+          if (response?.value && response.value.startsWith('/9j/') /* Basic JPEG header */) {
+            const dataUrl = `data:image/jpeg;base64,${response.value}`;
+            setImageSrc(dataUrl);
+          } else {
+            // Handle invalid image data
+            setImageSrc(null);
+          }
+        } catch (error) {
+          console.error('Error fetching image:', error);
+          setImageSrc(null); // Ensure we reset imageSrc on error
+        }
+      }
+    };
+
+    handleFetchImage();
+  }, [data, fetchBase64Image]);
+
+      console.log(imageSrc, 'imageSrc')
       
       
   
@@ -131,7 +159,7 @@ const ProfileEdit = () => {
 
   return (
     <div className='relative'>
-         <div className=" rounded-lg shadow-md bg-white dark:bg-slate-800 w-full mb-4  h-[26rem] md:h-[20rem]">
+         <div className=" rounded-lg shadow-md bg-white dark:bg-slate-800 w-full mb-4  h-[28rem] md:h-[22rem] lg:h-[20rem]">
             <div className='flex flex-col  items-center '>
                 <div className=" bg-cover bg-center">
                     <Image
@@ -145,20 +173,25 @@ const ProfileEdit = () => {
 
                     />
                 </div>
-                <div className="w-24 h-24 md:w-40 md:h-40 absolute gap-2 top-32 left-8 ">
-                  {imageSrc ? 
-                    (<Image
-                      alt="image"
+                <div className="w-24 h-24 md:w-40 md:h-40 absolute gap-2 top-32 left-8">
+                  {imageSrc ? (
+                    <Image
+                      alt="profile image"
                       src={imageSrc}
-                      className='w-full h-full rounded-md'
-                      width={160} 
-                      height={160} 
-                      />):(
-                        <div className="w-full h-full flex items-center justify-center bg-[#b4898e] text-white  font-bold rounded-md">
-                          <p className='text-4xl md:text-6xl rounded-full text-[#722f37] font-serif'>{`${f_name}${l_names}`}</p>  
-                        </div>    
-                    )} 
+                      className="w-full h-full rounded-md"
+                      width={160}
+                      height={160}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-[#b4898e] text-white font-bold rounded-md">
+                      <p className="text-4xl md:text-6xl rounded-full text-[#722f37] font-serif">
+                        {`${f_name}${l_names}`}
+                      </p>
+                    </div>
+                  )}
                 </div>
+
+
             </div>
             <div className='absolute top-[12rem] left-36 md:left-56  '>
               <h3 className='font-medium text-sm md:text-2xl text-gray-500 flex items-center'>{`${data?.No}`} <GoDotFill /> {' '} {`${data?.first_name.toUpperCase()} ${data?.last_name.toUpperCase()}`}</h3>
@@ -182,10 +215,10 @@ const ProfileEdit = () => {
                 </p>
               </Link>
             </div> */}
-            <div className='text-gray-400 absolute top-[20rem]  md:top-[14rem] lg:top-[12rem] right-0 mt-12 mr-2 md:mr-14 lg:mr-8 flex flex-col items-start lg:items-end'>
+            <div className='text-gray-400 absolute top-[22rem] md:top-[16rem]  lg:top-[12rem] right-0 mt-12 mr-2 md:mr-14 lg:mr-8 flex flex-col items-start lg:items-end'>
               <Link href='/Complaint-History'>
                 <p className='font-medium text-gray-400 flex gap-2 items-center text-sm md:text-base'>
-                  Number of complaints: {lengths > 0 ? lengths : 0}
+                  Number of complaints: <p className='text-blue-700'>{`${lengths > 0 ? lengths : 0}`}</p>
                 </p>
               </Link>
             </div>
