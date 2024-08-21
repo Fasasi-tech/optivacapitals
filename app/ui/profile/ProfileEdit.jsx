@@ -32,7 +32,7 @@ const ProfileEdit = () => {
   
       const value=complaint?.value
       const findCompanyEmail = profileData?.userPrincipalName;
-      const [imageSrc, setImageSrc] = useState('');
+      const [imageSrc, setImageSrc] = useState(null);
       const [fetchBase64Image] = usePictureMutation()
 
       const complaintResult = value?.filter((i) => i.Company_Email === findCompanyEmail)
@@ -151,8 +151,8 @@ const ProfileEdit = () => {
                       alt="image"
                       src={imageSrc}
                       className='w-full h-full rounded-md'
-                      width={160} // or use the size you prefer
-                      height={160} // or use the size you prefer
+                      width={160} 
+                      height={160} 
                       />):(
                         <div className="w-full h-full flex items-center justify-center bg-[#b4898e] text-white  font-bold rounded-md">
                           <p className='text-4xl md:text-6xl rounded-full text-[#722f37] font-serif'>{`${f_name}${l_names}`}</p>  
