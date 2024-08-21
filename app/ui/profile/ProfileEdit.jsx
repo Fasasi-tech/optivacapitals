@@ -58,7 +58,7 @@ const ProfileEdit = () => {
             try {
               const payload = { employeeNo: data.No };
               const response = await fetchBase64Image(payload).unwrap();
-              const dataUrl = `data:image/jpeg;base64,${response.value}`;
+              const dataUrl = response.value ?`data:image/jpeg;base64,${response.value}` : null;
               setImageSrc(dataUrl);
             } catch (error) {
               console.error('Error fetching image:', error);
