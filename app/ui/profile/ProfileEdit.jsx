@@ -131,7 +131,7 @@ const ProfileEdit = () => {
 
   return (
     <div className='relative'>
-         <div className=" rounded-lg shadow-md bg-white dark:bg-slate-800 w-full mb-4 md:h-[20rem] h-[24rem]">
+         <div className=" rounded-lg shadow-md bg-white dark:bg-slate-800 w-full mb-4  h-[26rem] md:h-[20rem]">
             <div className='flex flex-col  items-center '>
                 <div className=" bg-cover bg-center">
                     <Image
@@ -160,7 +160,7 @@ const ProfileEdit = () => {
                     )} 
                 </div>
             </div>
-            <div className='absolute top-[12rem] left-36 md:left-56'>
+            <div className='absolute top-[12rem] left-36 md:left-56  '>
               <h3 className='font-medium text-sm md:text-2xl text-gray-500 flex items-center'>{`${data?.No}`} <GoDotFill /> {' '} {`${data?.first_name.toUpperCase()} ${data?.last_name.toUpperCase()}`}</h3>
               <div className='flex flex-wrap md:flex-nowrap items-center justify-start gap-4 mt-4'>
                 <div className=' text-gray-400' >
@@ -173,13 +173,23 @@ const ProfileEdit = () => {
                       
                       <p className='font-medium text-gray-400 flex gap-2 items-center'><FaRegCalendarAlt />{`joined ${d.toDateString()}`}</p>
                   </div>
-                  <div className='flex items-center gap-2 text-gray-400'>
-                    <Link href='/Complaint-History'>
-                      <p className='font-medium text-gray-400 flex gap-2 items-center'><MdOutlineReportProblem />{lengths >0 ?lengths : 0}</p>
-                    </Link>
-                  </div> 
               </div>
             </div>
+            {/* <div className='absolute text-gray-400 top-[14rem] lg:top-[12rem] right-0 mt-12 mr-4 lg:mr-8'>
+              <Link href='/Complaint-History'>
+                <p className='font-medium text-gray-400 flex gap-2 items-center'>
+                  Number of complaints: {lengths > 0 ? lengths : 0}
+                </p>
+              </Link>
+            </div> */}
+            <div className='text-gray-400 absolute top-[20rem]  md:top-[14rem] lg:top-[12rem] right-0 mt-12 mr-2 md:mr-14 lg:mr-8 flex flex-col items-start lg:items-end'>
+              <Link href='/Complaint-History'>
+                <p className='font-medium text-gray-400 flex gap-2 items-center text-sm md:text-base'>
+                  Number of complaints: {lengths > 0 ? lengths : 0}
+                </p>
+              </Link>
+            </div>
+
         </div>
         {
             data && (
