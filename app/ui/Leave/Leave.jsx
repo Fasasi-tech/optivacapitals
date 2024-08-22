@@ -161,7 +161,7 @@ const Leave = () => {
         if(err && err?.data?.error?.message){
             toast.error(err?.data?.error?.message)
         } else {
-            toast.error('someting went wrong')
+            toast.error('something went wrong')
         }
     }
  }
