@@ -7,7 +7,7 @@ const ENDPOINT="https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/HRLeaveApplicationsList
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/ComplaintFormListPage
 //https://api.businesscentral.dynamics.com/v2.0/1a138626-759e-4827-97f1-b49b7fd4caef/OPTIVA_API/ODataV4/Company('My%20Company')/HRCardPageAPI
-const backendEndPoint ="https://optiva-capitals.onrender.com/api/v1/employees"
+const backendEndPoint ="https://optiva-leave-cab8779527d7.herokuapp.com/api/v1/employees"
 
 export const employeeApiSlice = apiSlice.injectEndpoints({
     endpoints:(builder) => ({
