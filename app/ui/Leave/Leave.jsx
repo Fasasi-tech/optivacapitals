@@ -23,7 +23,7 @@ const Leave = () => {
         
     console.log(employee_list)
 
-    if ( employee_list_error || leave_error || leave_type_loading ){
+    if ( employee_list_error || leave_error || leave_type_error){
         return <p>Something went wrong!</p>
     }
 
