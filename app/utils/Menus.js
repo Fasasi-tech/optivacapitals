@@ -1,6 +1,8 @@
 import { MdOutlinePending, MdOutlineQueryBuilder  } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FaPaypal } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
+import { IoCalendarClearOutline } from "react-icons/io5";
 
 export const Menus=[
     {
@@ -26,6 +28,20 @@ export const Menus=[
     },
     {
         "id":4,
+        "title":" Acknowledgement",
+        "icon": <FaCheckCircle />,
+        "path":"/acknowledgement"
+
+    },
+    {
+        "id":5,
+        "title":" Acknowledgement History",
+        "icon": <IoCalendarClearOutline />,
+        "path":"/acknowledgement-history"
+
+    },
+    {
+        "id":6,
         "title":"Complaint form",
         "icon": <MdOutlineQueryBuilder />,
         "path":"/Complaint"
@@ -33,7 +49,7 @@ export const Menus=[
     },
     
     {
-        "id":5,
+        "id":7,
         "title":"Complaint History",
         "icon": <CgProfile />,
         "path":"/Complaint-History"
@@ -43,10 +59,12 @@ export const Menus=[
   
      
     {
-        "id":6,
+        "id":8,
         "title":"Pay Slip",
         "icon": <FaPaypal />,
         "path":"/pay-slip"
 
     },
+
+    
 ]

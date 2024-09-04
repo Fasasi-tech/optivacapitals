@@ -31,6 +31,11 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
             query:() =>`${backendEndPoint}/history`,
             providesTags:['LeaveHistory']
         }),
+        acknowledgementHistory:builder.query({
+            query:() =>`${backendEndPoint}/acknowledgement-history`,
+            providesTags:['acknowledgement-history']
+        }),
+
         complaint:builder.mutation({
             query:(data) =>({
                 url:`${backendEndPoint}/complaint`,
@@ -48,6 +53,13 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
         leaves:builder.mutation({
             query:(data) =>({
                 url:`${backendEndPoint}/leave`,
+                method:'POST',
+                body:data
+            })
+        }),
+        acknowledgement:builder.mutation({
+            query:(data) =>({
+                url:`${backendEndPoint}/acknowledgement`,
                 method:'POST',
                 body:data
             })
@@ -92,4 +104,4 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
     overrideExisting: true,
 })
 
-export const { useComplaintMutation,usePictureMutation, usePrintPaySlipMutation, usePayrollDateQuery, usePayrollQuery,usePayslipCardQuery, useDownloadPdfMutation, useComplaintListPageQuery, useLeavesMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useEmployeeCardQuery} = employeeApiSlice
+export const { useComplaintMutation,usePictureMutation, useAcknowledgementHistoryQuery, usePrintPaySlipMutation, usePayrollDateQuery, usePayrollQuery,usePayslipCardQuery, useDownloadPdfMutation, useComplaintListPageQuery, useLeavesMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useAcknowledgementMutation, useEmployeeCardQuery} = employeeApiSlice

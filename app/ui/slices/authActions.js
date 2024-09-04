@@ -58,13 +58,7 @@ export const signIn = (instance) => async (dispatch) => {
     // Acquire a separate token for Microsoft Graph Api 
 
     const graphAccessToken = await acquireGraphToken(instance, loginResponse.account);
-    // console.log("graph",graphAccessToken)
-    // console.log('Microsoft Graph Access Token:', graphAccessToken)
-
-     // Fetch the user profile using the Graph API access token
-    //  dispatch(fetchUserProfile(graphAccessToken));
-
-    // Convert non-serializable values to serializable
+  
     const serializedUser = {
       ...user,
       tenantProfiles: convertMapToObject(user.tenantProfiles),

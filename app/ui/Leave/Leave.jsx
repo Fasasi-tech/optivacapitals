@@ -376,7 +376,7 @@ const Leave = () => {
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid  border-slate-300 text-gray-500 h-12 bg-transparent  '
                             >
                                  <option>{leave_type_loading && 'Loading'}</option>
-                                    {leave_type.value.map((center) =>(
+                                    {leave_type?.value?.map((center) =>(
                                     <option key={center.Id} value={center.Id} >
                                     {center.Code}
                                 </option>

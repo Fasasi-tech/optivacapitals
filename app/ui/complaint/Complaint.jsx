@@ -102,8 +102,11 @@ const Complaint = () => {
            
         if(err && err?.data?.error?.message){
             toast.error(err?.data?.error?.message)
-            } else {
-                toast.error('someting went wrong')
+            } else if (err){
+                toast.error(err)
+            }
+            else{
+                toast.error('something went wrong!')
             }
         }
      }

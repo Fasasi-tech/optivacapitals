@@ -22,7 +22,7 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
     reducerPath:'employeeApi',
      baseQuery,
-    tagTypes: [ 'Employee','payrollDate', 'EmployeeCard','payroll', 'PaySlipCard', 'LeavePeriod', 'LeaveTypes', 'EmployeesList', 'LeaveHistory', 'complaintListPage'],  //automated re-fetching
+    tagTypes: [ 'Employee','payrollDate', 'acknowledgement-history', 'EmployeeCard','payroll', 'PaySlipCard', 'LeavePeriod', 'LeaveTypes', 'EmployeesList', 'LeaveHistory', 'complaintListPage'],  //automated re-fetching
     endpoints: (builder) => ({
 
     })
