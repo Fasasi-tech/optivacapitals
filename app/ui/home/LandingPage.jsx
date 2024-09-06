@@ -75,8 +75,8 @@ if (isAuthenticated) {
     </div>
       <div className='flex flex-grow flex-col lg:flex-row items-start  lg:items-center h-[50%]  justify-normal lg:justify-between'>
         <div className='lg:w-1/3 p-4  order-2 lg:order-1' >
-          <h1 className='text-2xl lg:text-4xl font-black text-[#722f37] font-libre-baskerville'>Leave Management</h1>
-          <p className='mt-4 font-libre-baskerville  font-bold text-xl text-blue-900'> Streamline your leave request, apply for time-off in minutes.</p>
+          <h1 className='text-2xl lg:text-4xl font-black text-[#722f37] font-libre-baskerville'>Human Resources Management System</h1>
+          <p className='mt-4 font-libre-baskerville  font-bold text-xl text-blue-900'> Streamline your HR processes with our comprehensive Human Resources Management System and apply for time-off in minutes.</p>
           {isAuthenticated ? (
              <div className='mt-4 lg:mt-16 '>
               <button onClick={handleSignOut} className='w-full md:w-auto px-16 rounded-md  font-bold hover:bg-[#b6868c]  bg-[#722f37]  py-4'>Logout</button>

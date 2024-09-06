@@ -31,6 +31,10 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
             query:() =>`${backendEndPoint}/history`,
             providesTags:['LeaveHistory']
         }),
+        postedLeave:builder.query({
+            query:() =>`${backendEndPoint}/postedleave`,
+            providesTags:['postedLeave']
+        }),
         acknowledgementHistory:builder.query({
             query:() =>`${backendEndPoint}/acknowledgement-history`,
             providesTags:['acknowledgement-history']
@@ -104,4 +108,4 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
     overrideExisting: true,
 })
 
-export const { useComplaintMutation,usePictureMutation, useAcknowledgementHistoryQuery, usePrintPaySlipMutation, usePayrollDateQuery, usePayrollQuery,usePayslipCardQuery, useDownloadPdfMutation, useComplaintListPageQuery, useLeavesMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useAcknowledgementMutation, useEmployeeCardQuery} = employeeApiSlice
+export const { useComplaintMutation,usePostedLeaveQuery,usePictureMutation, useAcknowledgementHistoryQuery, usePrintPaySlipMutation, usePayrollDateQuery, usePayrollQuery,usePayslipCardQuery, useDownloadPdfMutation, useComplaintListPageQuery, useLeavesMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useAcknowledgementMutation, useEmployeeCardQuery} = employeeApiSlice

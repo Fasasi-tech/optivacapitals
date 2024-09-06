@@ -116,11 +116,29 @@ const Leave = () => {
 
     
 
-     const calculateMinDate = () =>{
-        const currentDate = new Date()
-        currentDate.setDate(currentDate.getDate() +3);
-        return currentDate.toISOString().split('T')[0]
-     }
+    //  const calculateMinDate = () =>{
+    //     const currentDate = new Date()
+    //     currentDate.setDate(currentDate.getDate() +3);
+    //     return currentDate.toISOString().split('T')[0]
+    //  }
+
+    const calculateMinDate = (leaveType) => {
+        const currentDate = new Date();
+      
+        // Check for compassionate leave and sick leave
+        const leaveTypesWithoutRestriction = ['compassionate', 'sick'];
+      
+        if (leaveTypesWithoutRestriction.includes(leaveType?.toLowerCase())) {
+          // Return the current date if it's compassionate or sick leave
+          return currentDate.toISOString().split('T')[0];
+        } else {
+          // Add 3 days for other leave types
+          currentDate.setDate(currentDate.getDate() + 3);
+          return currentDate.toISOString().split('T')[0];
+        }
+      };
+      
+
      
      
      // Check if a date is a weekday
@@ -128,7 +146,6 @@ const Leave = () => {
 
   const calculateReturningDate = (Start_Date, Days_Applied) => {
     if (!Start_Date) {
-      //console.error('Invalid input. Please provide a valid start date and days applied.');
       setReturningDate('');
       return;
     }
@@ -157,11 +174,13 @@ const Leave = () => {
         toast.success('Leave form submitted successfully');
         resetForm()
     }catch (err){
-        // console.log(err?.data?.error?.message)
-        if(err && err?.data?.error?.message){
-            toast.error(err?.data?.error?.message)
+   
+        if (err?.data?.error?.message) {
+            toast.error(err?.data?.error?.message);
+        } else if (err?.data?.error) {
+            toast.error(err?.data?.error);  // Handles error: "Values must be provided in the body."
         } else {
-            toast.error('something went wrong')
+            toast.error('An unexpected error occurred');
         }
     }
  }
@@ -410,7 +429,7 @@ const Leave = () => {
                                 value={values.Start_Date}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                min={calculateMinDate()}
+                                min={calculateMinDate(values.Leave_Type)}
                                 className='p-2 w-full outline-none border border-solid  border-slate-300 bg-white dark:bg-slate-800 text-gray-500 h-12 bg-transparent'
                             />
                             {touched.Start_Date && errors.Start_Date ?<div className='text-red-500 pl-2 font-semibold'>{errors.Start_Date}</div>: null}

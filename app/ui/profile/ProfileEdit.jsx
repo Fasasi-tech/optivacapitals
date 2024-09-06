@@ -71,30 +71,60 @@ const ProfileEdit = () => {
       // }, [data, fetchBase64Image]);
 
     
+  // useEffect(() => {
+  //   const handleFetchImage = async () => {
+  //     if (data && data.No) {
+  //       try {
+  //         const payload = { employeeNo: data.No };
+  //         const response = await fetchBase64Image(payload).unwrap();
+
+  //         // Validate if response.value is a valid Base64 string (a basic check)
+  //         if (response?.value && response.value.startsWith('/9j/') /* Basic JPEG header */) {
+  //           const dataUrl = `data:image/jpeg;base64,${response.value}`;
+  //           console.log(dataUrl, 'dataurl')
+  //           setImageSrc(dataUrl);
+  //         } else {
+  //           // Handle invalid image data
+  //           setImageSrc(null);
+  //         }
+  //       } catch (error) {
+  //         console.error('Error fetching image:', error);
+  //         setImageSrc(null); // Ensure we reset imageSrc on error
+  //       }
+  //     }
+  //   };
+
+  //   handleFetchImage();
+  // }, [data, fetchBase64Image]);
+
   useEffect(() => {
     const handleFetchImage = async () => {
       if (data && data.No) {
         try {
           const payload = { employeeNo: data.No };
           const response = await fetchBase64Image(payload).unwrap();
-
-          // Validate if response.value is a valid Base64 string (a basic check)
-          if (response?.value && response.value.startsWith('/9j/') /* Basic JPEG header */) {
+  
+          // Check if the response contains a valid Base64 value
+          if (response?.value) {
+            // Assuming the backend is returning a Base64 encoded image
             const dataUrl = `data:image/jpeg;base64,${response.value}`;
+            console.log(dataUrl, 'dataurl');
             setImageSrc(dataUrl);
           } else {
-            // Handle invalid image data
+            // Handle cases where the image data is missing or invalid
+            console.error('Invalid image data received');
             setImageSrc(null);
           }
         } catch (error) {
           console.error('Error fetching image:', error);
-          setImageSrc(null); // Ensure we reset imageSrc on error
+          setImageSrc(null); // Reset imageSrc on error
         }
       }
     };
-
+  
     handleFetchImage();
   }, [data, fetchBase64Image]);
+  
 
       console.log(imageSrc, 'imageSrc')
       

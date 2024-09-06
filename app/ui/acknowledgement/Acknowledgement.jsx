@@ -8,12 +8,12 @@ import Loader from '@/app/utils/Loader'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter} from 'next/navigation'
-import { useGetLeaveQuery, useGetEmployeesQuery, useAcknowledgementMutation } from '../slices/usersApiSlice'
+import { useGetLeaveQuery, useGetEmployeesQuery, usePostedLeaveQuery, useAcknowledgementMutation } from '../slices/usersApiSlice'
 import { useGetProfilesQuery } from '../slices/profileApiSlice'
 
 
 const Acknowledgement = () => {
-    const {data:leave, isLoadingLeave, errorLeave} = useGetLeaveQuery()
+    const {data:leave, isLoadingLeave, errorLeave} = usePostedLeaveQuery()
     const {data:LeaveData, isLoadingProfile, errorProfile} =useGetProfilesQuery()
     const {data:employee_list, isLoading:employee_list_loading, error:employee_list_error} = useGetEmployeesQuery()
     const [Acknowledgement, {status, error, isLoading}] = useAcknowledgementMutation()
@@ -41,11 +41,11 @@ const Acknowledgement = () => {
    const ResultEmpNo = getEmpNo?.No;
    console.log('ResultEmpNo', ResultEmpNo)
 
-    const fresult= result?.filter((v) =>v.Status === 'Posted').filter((f) => f.Employee_No==='OCP00109');
+    const fresult= result?.filter((v) =>v.Status === 'Posted').filter((f) => f.Employee_No=== ResultEmpNo);
     console.log('fresult', fresult)
 
-    const final=fresult?.filter((f) => f.Employee_No==='OCP00109');
-    console.log(final, 'final')
+    // const final=fresult?.filter((f) => f.Employee_No==='OCP00109');
+    // console.log(final, 'final')
 
     const handleApplicationCode = () =>{
         fresult
@@ -113,9 +113,9 @@ const Acknowledgement = () => {
         const Employee_Number = fresult.find((i) => code === i.Application_Code)
 
         if (Employee_Number){
-            const {Days_Applied} = Employee_Number
+            const {Approved_Days} = Employee_Number
 
-            return `${Days_Applied}`
+            return `${Approved_Days}`
                 } else if (!Employee_Number){
         return ''
      }
@@ -143,12 +143,13 @@ const Acknowledgement = () => {
             toast.success('Acknowledgement form submitted successfully!')
             resetForm()
         }catch(err){
-          console.log(err?.data?.error?.message)
-         if(err && err?.data?.error?.message){
-            toast.error(err?.data?.error?.message)
-        } else {
-            toast.error('something went wrong')
-        }
+            if (err?.data?.error?.message) {
+                toast.error(err?.data?.error?.message);
+            } else if (err?.data?.error) {
+                toast.error(err?.data?.error);  // Handles error: "Values must be provided in the body."
+            } else {
+                toast.error('An unexpected error occurred');
+            }
     }
 
     }

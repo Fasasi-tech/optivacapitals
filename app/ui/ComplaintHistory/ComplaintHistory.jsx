@@ -51,7 +51,7 @@ const ComplaintHistory = () => {
 
       const itemsPerPage =5
 
-    const totalPages= Math.ceil(result.length / itemsPerPage)
+    const totalPages= Math.ceil(result2.length / itemsPerPage)
 
     const handleNextPage = () =>{
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))
@@ -75,8 +75,8 @@ const ComplaintHistory = () => {
   return (
     <>
      <div className='flex justify-start  font-medium mb-8'>
-            <h1 className='font-libre-baskerville font-bold  text-[#722f37]'>Complaint History</h1>
-        </div>
+        <h1 className='font-libre-baskerville font-bold  text-[#722f37]'>Complaint History</h1>
+     </div>
     <div className='bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg overflow-auto'>
         <Table>
             <TableHeader>
@@ -109,7 +109,7 @@ const ComplaintHistory = () => {
                     <TableCell>{i.Job_Title}</TableCell>
                     <TableCell>{i.Nature_of_Complaint}</TableCell>
                     <TableCell>{i.Supervisor}</TableCell>
-                    <TableCell ><p className={`p-1 w-20 text-center rounded-md text-white font-semibold ${i.Status === 'Closed' ? 'bg-green-200 text-green-500':  ''}`}>{i.Status}</p></TableCell>
+                    <TableCell ><p className={`p-1 w-20 text-center rounded-md text-white font-semibold ${i.Status === 'Closed' ? 'bg-green-200 text-green-700':  ''}`}>{i.Status}</p></TableCell>
                 </TableRow>
                 ))}
             </TableBody>
@@ -139,7 +139,8 @@ const ComplaintHistory = () => {
           
             </div>
             
-        </div></>
+        </div>
+    </>
   )
 }
 

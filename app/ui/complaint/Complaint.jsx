@@ -100,13 +100,12 @@ const Complaint = () => {
             router.push('/Complaint')
         }catch (err){
            
-        if(err && err?.data?.error?.message){
-            toast.error(err?.data?.error?.message)
-            } else if (err){
-                toast.error(err)
-            }
-            else{
-                toast.error('something went wrong!')
+            if (err?.data?.error?.message) {
+                toast.error(err?.data?.error?.message);
+            } else if (err?.data?.error) {
+                toast.error(err?.data?.error);  // Handles error: "Values must be provided in the body."
+            } else {
+                toast.error('An unexpected error occurred');
             }
         }
      }
