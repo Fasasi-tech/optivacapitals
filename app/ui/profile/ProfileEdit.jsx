@@ -52,51 +52,6 @@ const ProfileEdit = () => {
         }
       }, [employee_list, getReliever]);
 
-      // useEffect(() => {
-      //   const handleFetchImage = async () => {
-      //     if (data && data.No) {  
-      //       try {
-      //         const payload = { employeeNo: data.No };
-      //         const response = await fetchBase64Image(payload).unwrap();
-      //         const dataUrl = response.value ?`data:image/jpeg;base64,${response.value}` : null;
-      //         setImageSrc(dataUrl);
-      //       } catch (error) {
-      //         console.error('Error fetching image:', error);
-      //       }
-      //     }
-      //   };
-      
-      //   handleFetchImage(); 
-       
-      // }, [data, fetchBase64Image]);
-
-    
-  // useEffect(() => {
-  //   const handleFetchImage = async () => {
-  //     if (data && data.No) {
-  //       try {
-  //         const payload = { employeeNo: data.No };
-  //         const response = await fetchBase64Image(payload).unwrap();
-
-  //         // Validate if response.value is a valid Base64 string (a basic check)
-  //         if (response?.value && response.value.startsWith('/9j/') /* Basic JPEG header */) {
-  //           const dataUrl = `data:image/jpeg;base64,${response.value}`;
-  //           console.log(dataUrl, 'dataurl')
-  //           setImageSrc(dataUrl);
-  //         } else {
-  //           // Handle invalid image data
-  //           setImageSrc(null);
-  //         }
-  //       } catch (error) {
-  //         console.error('Error fetching image:', error);
-  //         setImageSrc(null); // Ensure we reset imageSrc on error
-  //       }
-  //     }
-  //   };
-
-  //   handleFetchImage();
-  // }, [data, fetchBase64Image]);
-
   useEffect(() => {
     const handleFetchImage = async () => {
       if (data && data.No) {
