@@ -126,7 +126,7 @@ const Leave = () => {
         const currentDate = new Date();
       
         // Check for compassionate leave and sick leave
-        const leaveTypesWithoutRestriction = ['compassionate', 'sick'];
+        const leaveTypesWithoutRestriction = ['compassionate', 'sick', 'maternity'];
       
         if (leaveTypesWithoutRestriction.includes(leaveType?.toLowerCase())) {
           // Return the current date if it's compassionate or sick leave
