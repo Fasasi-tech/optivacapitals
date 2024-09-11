@@ -21,7 +21,7 @@ const Complaint = () => {
         return <Loader />
     }
 
-    if (employee_list_error){
+    if (employee_list_error){ 
         return <p>Something went wrong!</p>
     }
       

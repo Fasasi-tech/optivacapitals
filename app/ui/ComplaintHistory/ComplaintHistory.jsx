@@ -16,12 +16,14 @@ import {
 import ComplaintDialog from './ComplaintDialog'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 const ComplaintHistory = () => {
     const {data, isLoading, error} = useComplaintListPageQuery()
     const {data:profileData, isLoading:HistoryLoading, error:errorLoading} = useGetProfilesQuery()
 
     const [currentPage, setCurrentPage] = useState(1)
+    const [searchQuery, setSearchQuery] = useState('')
 
     if (isLoading || HistoryLoading){
         return <Loader />
@@ -36,13 +38,17 @@ const ComplaintHistory = () => {
 
     console.log(value, 'valueResult')
 
+    const handleChange = (e)=>{
+        setSearchQuery(e.target.value)
+    }
+
     const sortedArray= [...value].sort((a,b) =>{
         const sortA= a.Complaint_No.slice(5)
         const sortB = b.Complaint_No.slice(5)
         return sortB - sortA
     })
 
-    const result = sortedArray.filter((i) => i.Company_Email === findCompanyEmail)
+    const result = sortedArray.filter((i) => i.Company_Email === findCompanyEmail &&  i.Complaint_No.toLowerCase().includes(searchQuery.toLowerCase()));
     console.log('res', result)
 
     // const result2 = result.filter((r) => r.Status ==='Closed')
@@ -81,6 +87,17 @@ const ComplaintHistory = () => {
         <h1 className='font-libre-baskerville font-bold  text-[#722f37]'>Complaint History</h1>
      </div>
     <div className='bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg overflow-auto'>
+
+        <div className='flex flex-wrap md:flex-nowrap items-center justify-end gap-2 pb-8  border-1 border-b border-gray-200 mt-4'>
+            <Input
+                value={searchQuery}
+                onChange={handleChange}
+                type='text'
+                placeholder="Search" 
+                className="w-72" 
+            />
+        </div>
+        
         <Table>
             <TableHeader>
                 <TableRow>
