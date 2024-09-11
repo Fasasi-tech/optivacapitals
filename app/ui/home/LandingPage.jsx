@@ -10,34 +10,10 @@ import logo from '../../../public/optivac.png'
 
 const LandingPage = () => {
 
-  const dispatch = useDispatch()
-  const {isAuthenticated, user} = useSelector((state) => state.auth)
-  const { instance, accounts } = useMsal();
-  const router = useRouter();
-
-
-
-
-// useEffect(() => {
-//   if (isAuthenticated){
-//     router.push('/History')
-//   } 
-// }, [isAuthenticated])
-
-
-
-
-// const handleSignIn = () => {
-//   dispatch(signIn(instance, accounts));
-
-// };
-
-// const handleSignOut = () => {
-// dispatch(signOut(instance));
-
-// };
-
-
+const dispatch = useDispatch()
+const {isAuthenticated, user} = useSelector((state) => state.auth)
+const { instance, accounts } = useMsal();
+const router = useRouter();
 
 useEffect(() => {
 

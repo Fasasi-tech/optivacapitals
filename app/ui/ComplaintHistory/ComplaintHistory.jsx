@@ -13,6 +13,9 @@ import {
     PaginationNext,
     PaginationPrevious,
   } from "@/components/ui/pagination"
+import ComplaintDialog from './ComplaintDialog'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 const ComplaintHistory = () => {
     const {data, isLoading, error} = useComplaintListPageQuery()
@@ -42,7 +45,7 @@ const ComplaintHistory = () => {
     const result = sortedArray.filter((i) => i.Company_Email === findCompanyEmail)
     console.log('res', result)
 
-    const result2 = result.filter((r) => r.Status ==='Closed')
+    // const result2 = result.filter((r) => r.Status ==='Closed')
 
 
     const paginate = (array, pageSize, pageNumber) => {
@@ -51,7 +54,7 @@ const ComplaintHistory = () => {
 
       const itemsPerPage =5
 
-    const totalPages= Math.ceil(result2.length / itemsPerPage)
+    const totalPages= Math.ceil(result.length / itemsPerPage)
 
     const handleNextPage = () =>{
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))
@@ -62,7 +65,7 @@ const ComplaintHistory = () => {
 
     }
 
-    const paginatedData = paginate(result2, itemsPerPage, currentPage)
+    const paginatedData = paginate(result, itemsPerPage, currentPage)
 
     const formatDateWithCommas = (date) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -92,6 +95,7 @@ const ComplaintHistory = () => {
                     <TableHead className='py-8'> Job Title </TableHead>
                     <TableHead className='py-8'> Nature of Complaint </TableHead>
                     <TableHead className='py-8'> Supervisor </TableHead>
+                    <TableHead className='py-8'>View message</TableHead>
                     <TableHead className='py-8'> Status </TableHead>
                 </TableRow>
             </TableHeader>
@@ -109,7 +113,8 @@ const ComplaintHistory = () => {
                     <TableCell>{i.Job_Title}</TableCell>
                     <TableCell>{i.Nature_of_Complaint}</TableCell>
                     <TableCell>{i.Supervisor}</TableCell>
-                    <TableCell ><p className={`p-1 w-20 text-center rounded-md text-white font-semibold ${i.Status === 'Closed' ? 'bg-green-200 text-green-700':  ''}`}>{i.Status}</p></TableCell>
+                    <TableCell><Link href={`/Complaint-History/${i.Complaint_No}/comment`}><Button variant='outline'>view Response</Button></Link></TableCell>
+                    <TableCell ><p className={`p-1 w-20 text-center rounded-md text-white font-semibold ${i.Status === 'Closed' ? 'bg-green-200 text-green-700':  'bg-red-200 text-red-700'}`}>{i.Status}</p></TableCell>
                 </TableRow>
                 ))}
             </TableBody>

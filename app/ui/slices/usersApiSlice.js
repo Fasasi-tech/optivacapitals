@@ -86,6 +86,10 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
             query:(employeeId) =>`${backendEndPoint}/card/${employeeId}`,
             providesTags:['EmployeeCard']
         }),
+        complaintDialog:builder.query({
+            query:(complaintNo) =>`${backendEndPoint}/complaint/${complaintNo}`,
+            providesTags:['complaintNo']
+        }),
         payslipCard:builder.query({
             query:(employeeId) =>`${backendEndPoint}/payslip/${employeeId}`,
             providesTags:['PaySlipCard']
@@ -101,6 +105,13 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
         payrollDate:builder.query({
             query:() => `${backendEndPoint}/payrollDate`,
             providesTags:['payrollDate']
+        }),
+        postComment:builder.mutation({
+            query:({ complaintNo, values }) =>({
+                url:`${backendEndPoint}/complaint/${complaintNo}`,
+                method:'POST',
+                body:values
+            })
         })
 
        
@@ -108,4 +119,4 @@ export const employeeApiSlice = apiSlice.injectEndpoints({
     overrideExisting: true,
 })
 
-export const { useComplaintMutation,usePostedLeaveQuery,usePictureMutation, useAcknowledgementHistoryQuery, usePrintPaySlipMutation, usePayrollDateQuery, usePayrollQuery,usePayslipCardQuery, useDownloadPdfMutation, useComplaintListPageQuery, useLeavesMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useAcknowledgementMutation, useEmployeeCardQuery} = employeeApiSlice
+export const { useComplaintMutation,usePostedLeaveQuery,usePostCommentMutation, usePictureMutation, useAcknowledgementHistoryQuery, usePrintPaySlipMutation, usePayrollDateQuery, usePayrollQuery,usePayslipCardQuery, useDownloadPdfMutation, useComplaintListPageQuery, useLeavesMutation, useGetResponsibilityCenterQuery, useGetLeavePeriodQuery, useGetLeaveTypesQuery, useGetEmployeesQuery, useGetLeaveQuery, useAcknowledgementMutation, useEmployeeCardQuery, useComplaintDialogQuery} = employeeApiSlice
