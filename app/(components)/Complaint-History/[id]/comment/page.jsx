@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea'
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext,PaginationPrevious} from "@/components/ui/pagination"
-
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
 const page = ({params}) => {
     const {id} = params;
 
@@ -77,7 +77,7 @@ const page = ({params}) => {
     <div  className='px-4 mt-4 lg:mt-4 xl:px-8 '>
          <div className=' flex flex-wrap justify-between gap-2'>
             <div className='bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg overflow-auto w-full lg:w-3/5'>
-                <Table>
+                {/* <Table>
                     <TableHeader>
                     <TableRow>
                         <TableHead className='py-8 w-1/6'>Comment</TableHead>
@@ -100,7 +100,32 @@ const page = ({params}) => {
                     ))
                 }
                 </TableBody>   
-                </Table>
+                </Table> */}
+
+                <div className="flex flex-wrap gap-4">
+                {paginatedData && paginatedData.map((i, index) => (
+                    <div
+                    key={index}
+                    className={`w-72 h-auto p-4 flex flex-col rounded-tl-lg rounded-tr-lg rounded-bl-lg   gap-2 ${
+                        i.Comment_By === 'OPTIVAWEBAPI' ? 'bg-pink-400' : 'bg-green-200'
+                    }`}
+                    >
+                    <div>
+                        <div className='flex items-center justify-between font-semibold text-gray-600 mb-4'>
+                            <p className='text-xs'>{i.Comment_By}</p>
+                            <p className='text-xs'>{i.Comment_Date}</p>
+                        </div>
+                        <p className='text-gray-600 text-md font-bold '>{i.Comment}</p>
+                        <div className='flex items-center justify-between font-semibold text-gray-600'>
+                            <p className='text-gray-600 font-semibold text-xs'>{i.Seen_By}</p>
+                            <div className='flex items-center justify-between gap-2'><p>{i.Seen_Date !== '0001-01-01' && (<IoCheckmarkDoneSharp className='text-green-500'/>)}</p><p>{i.Seen_Date === '0001-01-01' ? '' :  i.Seen_Date}</p></div>
+                        </div>
+                        
+                    </div>
+                    </div>
+                ))}
+                </div>
+
                 <div className='flex  justify-end pr-10 font-sans text-gray-500 font-bold'>
                     <span>
                         Page {currentPage} of {totalPages}
@@ -110,23 +135,23 @@ const page = ({params}) => {
                     <Pagination>
                         <PaginationContent>
                         <PaginationItem>
-                            <PaginationPrevious href="#" onClick={handlePreviousPage} disabled={currentPage === 1} />
+                            <PaginationPrevious  onClick={handlePreviousPage} disabled={currentPage === 1} />
                         </PaginationItem>
                         <PaginationItem>
-                            <PaginationLink href="#">{currentPage}</PaginationLink>
+                            <PaginationLink>{currentPage}</PaginationLink>
                         </PaginationItem>
                         <PaginationItem>
                             <PaginationEllipsis />
                         </PaginationItem>
                         <PaginationItem>
-                            <PaginationNext href="#" onClick={handleNextPage} disabled={currentPage === totalPages} />
+                            <PaginationNext onClick={handleNextPage} disabled={currentPage === totalPages} />
                         </PaginationItem>
                         </PaginationContent>
                     </Pagination> 
                 </div>
             </div>
            
-            <div className='w-full lg:w-1/3 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg'>
+            <div className='w-full h-[26rem] lg:w-1/3 bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg'>
                 <Formik initialValues={{
                     Document_No:`${id}`,
                     Comment:""
