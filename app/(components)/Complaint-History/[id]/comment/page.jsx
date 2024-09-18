@@ -31,9 +31,17 @@ const page = ({params}) => {
 
 
     console.log(id, 'id')
-    const data2 = data.value.filter((d)=> d.Notify ===true)
+    const data2 = data.value.filter((d)=> {
+       if (d.Comment_By ==='OPTIVAWEBAPI'){
+        return true
+       } else if (d.Comment_By ==='BCADMIN' && d.Notify ===true ){
+        return true
+       } else{
+        return false
+       }
+    } )
 
-    const result= data2?.value
+    const result= data2
 
     const paginate = (array, pageSize, pageNumber) => {
         return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
