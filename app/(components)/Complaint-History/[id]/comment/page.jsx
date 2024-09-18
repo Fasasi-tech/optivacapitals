@@ -34,7 +34,7 @@ const page = ({params}) => {
     const data2 = data.value.filter((d)=> {
        if (d.Comment_By ==='OPTIVAWEBAPI'){
         return true
-       } else if (d.Comment_By ==='BCADMIN' && d.Notify ===true ){
+       } else if (d.Comment_By !=='OPTIVAWEBAPI'  && d.Notify ===true ){
         return true
        } else{
         return false
