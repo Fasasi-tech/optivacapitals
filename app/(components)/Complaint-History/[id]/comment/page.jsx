@@ -31,7 +31,9 @@ const page = ({params}) => {
 
 
     console.log(id, 'id')
-    const result= data?.value
+    const data2 = data.value.filter((d)=> d.Notify ===true)
+
+    const result= data2?.value
 
     const paginate = (array, pageSize, pageNumber) => {
         return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
