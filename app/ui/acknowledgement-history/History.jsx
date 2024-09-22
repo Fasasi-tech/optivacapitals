@@ -71,7 +71,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
                             <TableHead className='py-8'>Leave No</TableHead>
                             <TableHead className='py-8'>Employee Name</TableHead>
                             <TableHead className='py-8'>Employee No</TableHead>
-                            <TableHead className='py-8'>Days Applied</TableHead>
+                            <TableHead className='py-8'>Approved Days</TableHead>
                             <TableHead className='py-8'>Status</TableHead>
                         </TableRow>
                     </TableHeader>
