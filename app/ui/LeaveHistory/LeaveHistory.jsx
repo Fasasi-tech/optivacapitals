@@ -85,6 +85,7 @@ const LeaveHistory = () => {
                         <TableHead className='py-8'> Application Code </TableHead>
                         <TableHead className='py-8'> Company Email </TableHead>
                         <TableHead className='py-8'> Days Applied </TableHead>
+                        <TableHead className='py-8'>Approved Days</TableHead>
                         <TableHead className='py-8'> Employee No </TableHead>
                         {/* <TableHead className='py-8'> End Date </TableHead> */}
                         <TableHead className='py-8'> Leave Type </TableHead>
@@ -103,6 +104,7 @@ const LeaveHistory = () => {
                         <TableCell>{i.Application_Code}</TableCell>
                         <TableCell>{i.Company_Email}</TableCell>
                         <TableCell>{i.Days_Applied}</TableCell>
+                        <TableCell>{i.Approved_Days}</TableCell>
                         <TableCell>{i.Employee_No}</TableCell>
                         {/* <TableCell>{i.End_Date}</TableCell> */}
                         <TableCell>{i.Leave_Type}</TableCell>
