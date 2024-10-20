@@ -100,8 +100,8 @@ const ProfileEdit = () => {
     }
 
     console.log(data, 'datum')
-    const f_name= data?.first_name.slice(0,1).toUpperCase()
-    const l_names=data?.last_name.slice(0,1).toUpperCase()
+    const f_name= data?.First_Name.slice(0,1).toUpperCase()
+    const l_names=data?.Last_Name.slice(0,1).toUpperCase()
     const d= new Date(data?.date_of_joining)
     const d_o_b= new Date(data?.Date_Of_Birth)
     const date1= d_o_b
@@ -179,7 +179,7 @@ const ProfileEdit = () => {
 
             </div>
             <div className='absolute top-[12rem] left-36 md:left-56  '>
-              <h3 className='font-medium text-sm md:text-2xl text-gray-500 flex items-center'>{`${data?.No}`} <GoDotFill /> {' '} {`${data?.first_name.toUpperCase()} ${data?.last_name.toUpperCase()}`}</h3>
+              <h3 className='font-medium text-sm md:text-2xl text-gray-500 flex items-center'>{`${data?.No}`} <GoDotFill /> {' '} {`${data?.First_Name.toUpperCase()} ${data?.Last_Name.toUpperCase()}`}</h3>
               <div className='flex flex-wrap md:flex-nowrap items-center justify-start gap-4 mt-4'>
                 <div className=' text-gray-400' >
                       <p className='font-medium text-gray-400 flex gap-2 items-center '><SiJirasoftware /> {`${data?.job_description}`}</p>
