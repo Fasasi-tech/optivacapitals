@@ -103,10 +103,10 @@ const ProfileEdit = () => {
     const f_name= data?.first_name.slice(0,1).toUpperCase()
     const l_names=data?.last_name.slice(0,1).toUpperCase()
     const d= new Date(data?.date_of_joining)
-    const d_o_b= new Date(data?.d_o_b)
+    const d_o_b= new Date(data?.Date_Of_Birth)
     const date1= d_o_b
     const date2 = new Date()
-    const d_o_j= new Date(data?.date_of_joining)
+    const d_o_j= new Date(data?.Date_of_Joining)
     const probationDate = new Date(data?.Probation_Date_3mnths)
     const confirmationDate = new Date(data?.Confirmation_Date)
 
@@ -229,7 +229,7 @@ const ProfileEdit = () => {
                             <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>First Name</label>
                             <Input
                                 type='text'
-                                value={data.first_name}
+                                value={data.First_Name}
                                 placeholder=''
                                 readOnly
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -239,7 +239,7 @@ const ProfileEdit = () => {
                             <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Last Name</label>
                             <Input
                                 type='text'
-                                value={data.last_name}
+                                value={data.Last_Name}
                                 placeholder=''
                                 readOnly
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -259,7 +259,7 @@ const ProfileEdit = () => {
                             <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Leave Status</label>
                             <Input
                                 type='text'
-                                value={data.leave_status}
+                                value={data.Leave_Status}
                                 placeholder=''
                                 readOnly
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -269,7 +269,7 @@ const ProfileEdit = () => {
                             <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>City</label>
                             <Input
                                 type='text'
-                                value={data.city}
+                                value={data.City}
                                 placeholder=''
                                 readOnly
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -279,7 +279,7 @@ const ProfileEdit = () => {
                             <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Supervisor</label>
                             <Input
                                 type='text'
-                                value={data.supervisor}
+                                value={data.Supervisor}
                                 placeholder=''
                                 readOnly
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -289,7 +289,7 @@ const ProfileEdit = () => {
                             <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Department code</label>
                             <Input
                                 type='text'
-                                value={data.department_code}
+                                value={data.Department_Code}
                                 placeholder=''
                                 readOnly
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -299,7 +299,7 @@ const ProfileEdit = () => {
                             <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Residential Address</label>
                             <Input
                                 type='text'
-                                value={data.residential_address}
+                                value={data.Residential_Address}
                                 placeholder=''
                                 readOnly
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -309,7 +309,7 @@ const ProfileEdit = () => {
                             <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Status</label>
                             <Input
                                 type='text'
-                                value={data.status}
+                                value={data.Status}
                                 placeholder=''
                                 readOnly
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -323,7 +323,7 @@ const ProfileEdit = () => {
                             <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Company Email</label>
                             <Input
                                 type='text'
-                                value={data.company_email}
+                                value={data.Company_E_Mail}
                                 placeholder=''
                                 readOnly
                                 className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -334,7 +334,7 @@ const ProfileEdit = () => {
                               <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Personal Email</label>
                               <Input
                                   type='text'
-                                  value={data.personal_email}
+                                  value={data.Personal_E_Mail}
                                   placeholder=''
                                   readOnly
                                   className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -344,7 +344,7 @@ const ProfileEdit = () => {
                               <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Phone</label>
                               <Input
                                   type='text'
-                                  value={data.phone}
+                                  value={data.Home_Phone_Number}
                                   placeholder=''
                                   readOnly
                                   className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -358,7 +358,7 @@ const ProfileEdit = () => {
                               <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Marital Status</label>
                               <Input
                                   type='text'
-                                  value={data.marital_status}
+                                  value={data.Marital_Status}
                                   placeholder=''
                                   readOnly
                                   className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -368,7 +368,7 @@ const ProfileEdit = () => {
                               <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Gender</label>
                               <Input
                                   type='text'
-                                  value={data.gender}
+                                  value={data.Gender}
                                   placeholder=''
                                   readOnly
                                   className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -444,7 +444,7 @@ const ProfileEdit = () => {
                                 <label htmlFor="" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Job Title</label>
                                 <Input
                                     type='text'
-                                    value={data.job_title}
+                                    value={data.Job_Title}
                                     placeholder=''
                                     readOnly
                                     className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -454,7 +454,7 @@ const ProfileEdit = () => {
                                 <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Job Description</label>
                                 <Input
                                     type='text'
-                                    value={data.job_description}
+                                    value={data.Job_Description}
                                     placeholder=''
                                     readOnly
                                     className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -497,7 +497,7 @@ const ProfileEdit = () => {
                                 <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Employment Type</label>
                                 <Input
                                     type='text'
-                                    value={data.employment_type}
+                                    value={data.Employment_Type}
                                     placeholder=''
                                     readOnly
                                     className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -507,7 +507,7 @@ const ProfileEdit = () => {
                                 <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>NHIF NO</label>
                                 <Input
                                     type='text'
-                                    value={data.nhif_no}
+                                    value={data.Nhif_No}
                                     placeholder=''
                                     readOnly
                                     className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -517,7 +517,7 @@ const ProfileEdit = () => {
                                 <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Payroll Filter Group</label>
                                 <Input
                                     type='text'
-                                    value={data.payroll_filter_group}
+                                    value={data.Payroll_Filter_Group}
                                     placeholder=''
                                     readOnly
                                     className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -542,7 +542,7 @@ const ProfileEdit = () => {
                               <label htmlFor="Nature_of_Complaint" className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Annual Leave</label>
                               <Input
                                   type='text'
-                                  value={data.totai_leave}
+                                  value={data.Total_Leave_Days}
                                   placeholder=''
                                   readOnly
                                   className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -552,7 +552,7 @@ const ProfileEdit = () => {
                               <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Total Leave Taken</label>
                               <Input
                                   type='text'
-                                  value={data.total_leave_taken}
+                                  value={data.Total_Leave_Taken}
                                   placeholder=''
                                   readOnly
                                   className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
@@ -562,7 +562,7 @@ const ProfileEdit = () => {
                               <label  className='block text-base mb-2 text-gray-500 pl-2 font-semibold'>Leave Balance</label>
                               <Input
                                   type='text'
-                                  value={data.leave_balance}
+                                  value={data.Leave_Balance}
                                   placeholder=''
                                   readOnly
                                   className='p-2 w-full outline-none dark:bg-slate-800 border border-solid border-slate-300 text-gray-500 h-12 bg-transparent'
